@@ -1,5 +1,5 @@
 @extends('layouts.main')
-@section('title', 'Home')
+@section('title', 'IphoneStore')
 @section('content')
     <h3>iPhoneStore</h3>
     <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Quasi, voluptatibus!</p>
