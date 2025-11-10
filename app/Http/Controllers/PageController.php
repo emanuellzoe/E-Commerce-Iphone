@@ -16,7 +16,7 @@ class PageController extends Controller
     // Halaman daftar produk
     public function product()
     {
-        $products = Ecommerce::all(); // ambil semua data produk dari tabel ecommerce
+        $products = Ecommerce::all();
         return view('product', ['products' => $products]);
     }
 
@@ -35,8 +35,6 @@ class PageController extends Controller
             'price' => $request->price,
             'stock' => $request->stock,
         ]);
-
-        // setelah simpan, arahkan kembali ke halaman daftar produk
         return redirect('/product')->with('success', 'Produk berhasil ditambahkan!');
     }
 }
