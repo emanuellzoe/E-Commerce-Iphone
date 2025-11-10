@@ -1,6 +1,6 @@
 @extends('layouts.main')
 
-@section('title', 'Add Product | iPhoneStore')
+@section('title', 'Add Product')
 
 @section('content')
 <div class="container">

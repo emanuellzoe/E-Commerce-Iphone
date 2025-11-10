@@ -12,12 +12,6 @@
 */
 
 Route::get('/', 'PageController@home');
-
-// Menampilkan daftar produk
-Route::get('/product', 'PageController@product');
-
-// Menampilkan form tambah produk
-Route::get('/product/addform', 'PageController@productAddForm');
-
-// Menyimpan data produk baru ke database
-Route::post('/product/save', 'PageController@productSave');
+Route::get('product', 'PageController@product');
+Route::get('product/addform', 'PageController@productAddForm');
+Route::post('product/save', 'PageController@productSave');
