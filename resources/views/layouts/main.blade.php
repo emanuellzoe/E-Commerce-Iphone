@@ -1,96 +1,137 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>@yield('title', 'iPhoneStore')</title>
 
-    <link rel="stylesheet"
-          href="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/css/bootstrap.min.css"
-          integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T"
-          crossorigin="anonymous">
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.13.1/font/bootstrap-icons.min.css">
-    <link rel="stylesheet" href="https://cdn.datatables.net/2.3.4/css/dataTables.dataTables.css">
+  <link rel="stylesheet"
+        href="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/css/bootstrap.min.css"
+        integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T"
+        crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.13.1/font/bootstrap-icons.min.css">
+  <link rel="stylesheet" href="https://cdn.datatables.net/2.3.4/css/dataTables.dataTables.css">
 
-    <style>
-      /* halaman penuh dan warna dasar */
-      html, body { height:100%; margin:0; background:#0e0e0e; color:#e6e6e6; }
-      body { display:flex; flex-direction:column; min-height:100vh; }
+  <style>
+    /* halaman penuh dan warna dasar */
+    html, body { height:100%; margin:0; background:#0b0b0b; color:#e6e6e6; }
+    body { display:flex; flex-direction:column; min-height:100vh; }
 
-      /* header user atas (tipis) */
-      .topbar {
-        background: #151515;
-        border-bottom: 1px solid #222;
-        height:56px;
-        display:flex;
-        align-items:center;
-        padding:0 .75rem;
-      }
+    /* header user atas (tipis) */
+    .topbar {
+      background: #151515;
+      border-bottom: 1px solid #222;
+      height:56px;
+      display:flex;
+      align-items:center;
+      padding:0 .75rem;
+    }
 
-      /* layout konten utama: sidebar kiri + main content */
-      .app-wrapper { display:flex; flex:1; min-height:0; } /* min-height:0 agar anak flex scrollable */
-      .sidebar {
-        width: 240px;
-        background: #151515;
-        border-right: 1px solid #222;
-        padding-top: 1.25rem;
-        flex-shrink: 0;
-        overflow: auto;
-        height: calc(100vh - 56px); /* agar sidebar berhenti sebelum footer */
-      }
-      .sidebar .nav-link {
-        color: #cfcfcf;
-      }
-      .sidebar .nav-link.active, .sidebar .nav-link:hover {
-        background:#222;
-        color:#fff;
-      }
+    /* layout konten utama: sidebar kiri + main content */
+    .app-wrapper { display:flex; flex:1; min-height:0; } /* min-height:0 agar anak flex scrollable */
+    .sidebar {
+      width: 240px;
+      background: #151515;
+      border-right: 1px solid #222;
+      padding-top: 1.25rem;
+      flex-shrink: 0;
+      overflow: auto;
+      height: calc(100vh - 56px); /* agar sidebar berhenti sebelum footer */
+    }
+    .sidebar .nav-link {
+      color: #cfcfcf;
+    }
+    .sidebar .nav-link.active, .sidebar .nav-link:hover {
+      background:#222;
+      color:#fff;
+    }
 
-      .main-content {
-        flex:1;
-        padding: 1.5rem;
-        overflow:auto;
-      }
+    .main-content {
+      flex:1;
+      padding: 1.5rem;
+      overflow:auto;
+    }
 
-      /* card area untuk konten */
-      .content-card {
-        background:#1b1b1b;
-        border:1px solid #222;
-        color:#e6e6e6;
-        min-height:70vh; /* kerangka; nanti disesuaikan per halaman */
-      }
+    /* content card tanpa shadow, latar lebih gelap */
+    .content-card {
+      background:#0a0a0a;         /* konten utama: hitam lebih pekat */
+      border: 1px solid #1a1a1a;  /* outline ringan */
+      box-shadow: none !important;/* pastikan shadow dimatikan */
+      color:#e6e6e6;
+    }
 
-      /* footer menempel di bawah */
-      footer {
-        background: #151515;
-        color: #d0d0d0;
-        text-align: center;
-        padding: .75rem;
-        border-top: 1px solid #222; /* garis pembatas horizontal atas */
-        position: relative;
-      }
+    /* footer menempel di bawah */
+    footer {
+      background: #151515;
+      color: #d0d0d0;
+      text-align: center;
+      padding: .75rem;
+      border-top: 1px solid #222;
+      position: relative;
+    }
 
-      /* responsive: sidebar collapsible on small screens */
-      @media (max-width: 767px) {
-        .sidebar { position:fixed; left:-260px; top:56px; height:calc(100% - 56px); z-index:1030; transition:left .25s; }
-        .sidebar.show { left:0; }
-        .main-content { padding-top:1rem; }
-      }
+    /* =========================
+       Table: outline style + zebra rows
+       ========================= */
+    .table.outline {
+      width: 100%;
+      border-collapse: collapse;
+      background: transparent;
+      margin-bottom: 0;
+      border: 1px solid #222;
+    }
+    .table.outline th,
+    .table.outline td {
+      border: 1px solid #272727;
+      padding: 12px 10px;
+      vertical-align: middle;
+      color: #e6e6e6;
+    }
+    .table.outline thead th {
+      background: #151515; /* warna nav/header */
+      color: #f0f0f0;
+      font-weight: 600;
+      border-bottom-width: 2px;
+    }
+    .table.outline tbody tr:nth-child(odd) {
+      background: #0f0f0f; /* ganjil: gelap */
+    }
+    .table.outline tbody tr:nth-child(even) {
+      background: #141414; /* genap: sedikit lebih terang */
+    }
+    .table.outline tbody tr:hover {
+      background: #1f1f1f;
+    }
+    .table.outline td img {
+      max-width: 90px;
+      height: auto;
+      display: block;
+      margin-left: auto;
+      margin-right: auto;
+      border-radius: 4px;
+      border: 1px solid #222;
+      background: #0b0b0b;
+    }
 
-      /* optional small tweak for DataTable visuals in dark theme */
-      table.dataTable thead th { border-bottom: 0; }
-    </style>
+    @media (max-width: 767px) {
+      .sidebar { position:fixed; left:-260px; top:56px; height:calc(100% - 56px); z-index:1030; transition:left .25s; }
+      .sidebar.show { left:0; }
+      .main-content { padding-top:1rem; }
+    }
+
+    /* small visual tweaks for datatable header */
+    table.dataTable thead th { border-bottom: 0; }
+  </style>
 </head>
 <body>
 
-  <!-- TOP BAR (user di kanan) -->
+  <!-- TOP BAR -->
   <div class="topbar">
     <div class="container-fluid d-flex justify-content-between align-items-center">
       <div>
-        <!-- tombol toggle untuk mobile -->
         <button id="sidebarToggle" class="btn btn-sm btn-outline-secondary d-md-none">
           <i class="bi bi-list"></i>
         </button>
-        <!-- Nama brand (kecil) -->
         <a class="navbar-brand text-light ml-2 d-none d-md-inline" href="{{ url('/') }}">iPhoneStore</a>
       </div>
 
@@ -111,19 +152,16 @@
 
   <!-- APP WRAPPER: SIDEBAR + CONTENT -->
   <div class="app-wrapper">
-    <!-- SIDEBAR KIRI -->
     <aside class="sidebar d-none d-md-block">
       <nav class="nav flex-column px-2">
         <a class="nav-link {{ ($key ?? '') == 'home' ? 'active' : '' }}" href="{{ url('/') }}"><i class="bi bi-house"></i> Home</a>
         <a class="nav-link {{ ($key ?? '') == 'product' ? 'active' : '' }}" href="{{ url('/product') }}"><i class="bi bi-phone"></i> Products</a>
         <a class="nav-link {{ ($key ?? '') == 'add' ? 'active' : '' }}" href="{{ url('/product/addform') }}"><i class="bi bi-plus-square"></i> Add Product</a>
         <hr class="border-secondary my-2">
-        <!-- tambahan menu jika perlu -->
         <a class="nav-link" href="#"><i class="bi bi-gear"></i> Settings</a>
       </nav>
     </aside>
 
-    <!-- SIDEBAR versi mobile (hidden by default) -->
     <aside id="mobileSidebar" class="sidebar d-md-none">
       <nav class="nav flex-column px-2">
         <a class="nav-link" href="{{ url('/') }}">Home</a>
@@ -132,21 +170,18 @@
       </nav>
     </aside>
 
-    <!-- MAIN CONTENT -->
     <main class="main-content">
       <div class="container-fluid">
-        <div class="content-card shadow-sm p-3">
+        <div class="content-card p-3">
           @yield('content')
         </div>
       </div>
     </main>
   </div>
 
-  <!-- FOOTER -->
   <footer>
     &copy; {{ date('Y') }} iPhoneStore. All rights reserved.
   </footer>
-
 
   <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
           integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
@@ -160,10 +195,10 @@
   <script src="https://cdn.datatables.net/2.3.4/js/dataTables.js"></script>
 
   <script>
-    // init datatable (safe: will silently fail if #example not present)
+    // init datatable (aman jika #example tidak ada)
     try { new DataTable('#example'); } catch(e){}
 
-    // toggle sidebar on mobile
+    // toggle sidebar mobile
     document.getElementById('sidebarToggle')?.addEventListener('click', function () {
       document.getElementById('mobileSidebar')?.classList.toggle('show');
     });
@@ -171,16 +206,15 @@
     // Price formatting: global script used by pages with #price input
     document.addEventListener("DOMContentLoaded", function () {
       const priceInput = document.getElementById("price");
-      if (!priceInput) return; // keluar kalau halaman tidak punya input harga
+      if (!priceInput) return;
 
-      // create hidden raw field if not already present
-      if (!priceInput.closest('form').querySelector('input[name="price_raw"]')) {
+      const form = priceInput.closest("form");
+      // ensure hidden raw field exists
+      if (!form.querySelector('input[name="price_raw"]')) {
         const priceRaw = document.createElement("input");
         priceRaw.type = "hidden";
         priceRaw.name = "price_raw";
-        priceInput.parentNode.appendChild(priceRaw);
-      } else {
-        // reuse if exists
+        form.appendChild(priceRaw);
       }
 
       function formatRupiah(value) {
@@ -194,33 +228,28 @@
         const raw = priceInput.value.replace(/\D/g, "");
         const formatted = formatRupiah(raw);
         priceInput.value = formatted;
-        const priceRawEl = priceInput.closest('form').querySelector('input[name="price_raw"]');
+        const priceRawEl = form.querySelector('input[name="price_raw"]');
         if (priceRawEl) priceRawEl.value = raw;
         const diff = formatted.length - raw.length;
-        // adjust cursor to feel natural
         priceInput.setSelectionRange(cursor + diff, cursor + diff);
       });
 
-      // sebelum form dikirim, kirim angka murni
-      const form = priceInput.closest("form");
       form?.addEventListener("submit", () => {
         const raw = priceInput.value.replace(/\D/g, "");
-        // set hidden price_raw and optionally set visible price to raw
         const priceRawEl = form.querySelector('input[name="price_raw"]');
         if (priceRawEl) priceRawEl.value = raw;
-        // if controller expects 'price' field, copy raw into a hidden 'price' field
-        if (!form.querySelector('input[name="price_numeric"]')) {
+        // ensure controller receives 'price' numeric if it expects that field
+        if (!form.querySelector('input[name="price"]')) {
           const hiddenPrice = document.createElement('input');
           hiddenPrice.type = 'hidden';
           hiddenPrice.name = 'price';
           hiddenPrice.value = raw;
           form.appendChild(hiddenPrice);
         } else {
-          form.querySelector('input[name="price_numeric"]').value = raw;
+          form.querySelector('input[name="price"]').value = raw;
         }
       });
     });
   </script>
-
 </body>
 </html>
