@@ -3,46 +3,44 @@
 @section('title', 'Products')
 
 @section('content')
-<div class="container">
-  <div class="card">
-    <div class="card-header d-flex justify-content-between align-items-center">
-      <h5 class="mb-0 text-light">Daftar Produk iPhone</h5>
-      <a href="{{ url('/product/addform') }}" class="btn btn-primary"><i class="bi bi-plus-square"></i> Add Product</a>
-    </div>
+<div class="container-fluid">
+  <h3 class="mb-4 text-light">Daftar Produk iPhone</h3>
 
-    <div class="card-body">
-      <table id="example" class="table table-dark table-striped table-hover" style="width:100%">
-        <thead>
-          <tr>
-            <th>No</th>
-            <th>Nama Produk</th>
-            <th>Deskripsi</th>
-            <th>Harga</th>
-            <th>Stok</th>
-            <th>Gambar</th>
-          </tr>
-        </thead>
-        <tbody>
-          @foreach ($products as $idx => $p)
-            <tr>
-              <td>{{ $idx + 1 }}</td>
-              <td>{{ $p->product_name }}</td>
-              <td>{{ $p->description }}</td>
-              <td>Rp {{ number_format($p->price, 0, ',', '.') }}</td>
-              <td>{{ $p->stock }}</td>
-              <td>
-                @if ($p->image)
-                  <img src="{{ asset('storage/products/' . $p->image) }}" alt="{{ $p->product_name }}" class="img-thumbnail" style="max-width:100px;">
-                @else
-                  <img src="{{ asset('storage/products/no-image.jpg') }}" alt="No Image" class="img-thumbnail" style="max-width:100px;">
-                @endif
-              </td>
-            </tr>
-          @endforeach
-        </tbody>
-
-      </table>
-    </div>
-  </div>
+  <table id="example" class="table table-dark table-striped table-hover w-100">
+    <thead>
+      <tr>
+        <th>No</th>
+        <th>Nama Produk</th>
+        <th>Deskripsi</th>
+        <th>Harga</th>
+        <th>Stok</th>
+        <th>Gambar</th>
+      </tr>
+    </thead>
+    <tbody>
+      @foreach ($products as $idx => $p)
+      <tr>
+        <td>{{ $idx + 1 }}</td>
+        <td>{{ $p->product_name }}</td>
+        <td>{{ $p->description }}</td>
+        <td>Rp {{ number_format($p->price, 0, ',', '.') }}</td>
+        <td>{{ $p->stock }}</td>
+        <td>
+          @if ($p->image)
+            <img src="{{ asset('storage/products/' . $p->image) }}" 
+                 alt="{{ $p->product_name }}" 
+                 class="img-thumbnail bg-transparent border-0 p-0" 
+                 style="max-width: 100px;">
+          @else
+            <img src="{{ asset('storage/products/no-image.jpg') }}" 
+                 alt="No Image" 
+                 class="img-thumbnail bg-transparent border-0 p-0" 
+                 style="max-width: 100px;">
+          @endif
+        </td>
+      </tr>
+      @endforeach
+    </tbody>
+  </table>
 </div>
 @endsection
