@@ -25,7 +25,7 @@
     </div>
     <div class="form-group">
       <label for="image">Gambar Produk</label>
-      <input type="file" class="form-control" name="image" id="image">
+      <input type="file" class="form-control" name="image" id="image" required>
     </div>
 
     <button type="submit" class="btn btn-primary mt-3">Simpan</button>

@@ -15,10 +15,13 @@ class PageController extends Controller
 
     // Halaman daftar produk
     public function product()
-    {
-        $products = Ecommerce::all();
-        return view('product', ['products' => $products]);
-    }
+{
+    // Ambil data dari database, urutkan berdasarkan ID terbaru (descending)
+    $products = Ecommerce::orderBy('id', 'desc')->get();
+
+    return view('product', ['key' => 'product', 'products' => $products]);
+}
+
 
     // Halaman form tambah produk
     public function productAddForm()
