@@ -27,15 +27,9 @@
         <td>{{ $p->stock }}</td>
         <td>
           @if ($p->image)
-            <img src="{{ asset('storage/products/' . $p->image) }}" 
-                 alt="{{ $p->product_name }}" 
-                 class="img-thumbnail bg-transparent border-0 p-0" 
-                 style="max-width: 100px;">
+            <img src="{{ asset('storage/products/' . $p->image) }}" alt="{{ $p->product_name }}" style="max-width:100px;">
           @else
-            <img src="{{ asset('storage/products/no-image.jpg') }}" 
-                 alt="No Image" 
-                 class="img-thumbnail bg-transparent border-0 p-0" 
-                 style="max-width: 100px;">
+            <img src="{{ asset('storage/products/no-image.jpg') }}" alt="No Image" style="max-width:100px;">
           @endif
         </td>
       </tr>
