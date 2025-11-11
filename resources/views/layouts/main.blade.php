@@ -7,116 +7,133 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.13.1/font/bootstrap-icons.min.css">
     <link rel="stylesheet" href="https://cdn.datatables.net/2.3.4/css/dataTables.dataTables.css">
-    <style>
-    /* Layout dasar agar footer di bawah */
-    html, body {
-      height: 100%;
-      margin: 0;
-      background-color: #0e0e0e; /* abu tua gelap sebagai background keseluruhan */
+     <style>
+    /* halaman penuh dan warna dasar */
+    html, body { height:100%; margin:0; background:#0e0e0e; color:#e6e6e6; }
+    body { display:flex; flex-direction:column; min-height:100vh; }
+
+    /* header user atas (tipis) */
+    .topbar {
+      background: #151515;
+      border-bottom: 1px solid #222;
+      height:56px;
+      display:flex;
+      align-items:center;
+      padding:0 .75rem;
     }
 
-    body {
-      display: flex;
-      flex-direction: column;
-      min-height: 100vh;
-      color: #e0e0e0;
+    /* layout konten utama: sidebar kiri + main content */
+    .app-wrapper { display:flex; flex:1; min-height:0; } /* min-height:0 agar anak flex scrollable */
+    .sidebar {
+      width: 240px;
+      background: #151515;
+      border-right:1px solid #222;
+      padding-top: 1.25rem;
+      flex-shrink:0;
+      overflow:auto;
     }
-
-    main {
-      flex: 1; /* isi utama mengisi sisa layar */
-      display: flex;
-      flex-direction: column;
-      justify-content: flex-start;
-      padding-bottom: 20px;
-    }
-
-    /* Ubah warna header & footer */
-    .navbar, footer {
-      background-color: #151515 !important;
-    }
-
-    /* Warna link di navbar */
-    .navbar-dark .navbar-nav .nav-link {
+    .sidebar .nav-link {
       color: #cfcfcf;
-      transition: color 0.3s ease;
+    }
+    .sidebar .nav-link.active, .sidebar .nav-link:hover {
+      background:#222;
+      color:#fff;
     }
 
-    .navbar-dark .navbar-nav .nav-link:hover {
-      color: #ffffff;
+    .main-content {
+      flex:1;
+      padding: 1.5rem;
+      overflow:auto;
     }
 
-    /* Kontainer utama */
-    .main-container {
-      flex: 1;
-      padding: 2rem;
+    /* card area untuk konten */
+    .content-card {
+      background:#1b1b1b;
+      border:1px solid #222;
+      color:#e6e6e6;
+      min-height:70vh; /* kerangka; nanti disesuaikan per halaman */
     }
 
-    /* Card styling */
-    .card {
-      background-color: #1b1b1b;
-      border: 1px solid #222;
-      color: #e0e0e0;
-    }
-
-    .card-body {
-      min-height: 75vh; /* supaya konten hampir sampai footer */
-    }
-
+    /* footer menempel di bawah */
     footer {
-      color: #d0d0d0;
+      background:#151515;
+      color:#d0d0d0;
+      text-align:center;
+      padding:.75rem;
+    }
+
+    /* responsive: sidebar collapsible on small screens */
+    @media (max-width: 767px) {
+      .sidebar { position:fixed; left:-260px; top:56px; height:calc(100% - 56px); z-index:1030; transition:left .25s; }
+      .sidebar.show { left:0; }
+      .main-content { padding-top:1rem; }
     }
   </style>
-
-  <title>@yield('title', 'E-commerce iPhone')</title>
 </head>
 <body>
 
-  <!-- NAVBAR -->
-  <nav class="navbar navbar-expand-lg navbar-dark bg-dark shadow-sm">
-    <div class="container">
-      <!-- iPhoneStore sebagai tombol Home -->
-      <a class="navbar-brand font-weight-bold" href="{{ url('/') }}">iPhoneStore</a>
-
-      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navMain">
-        <span class="navbar-toggler-icon"></span>
-      </button>
-
-      <div class="collapse navbar-collapse" id="navMain">
-        <ul class="navbar-nav mr-auto">
-          <li class="nav-item"><a class="nav-link" href="{{ url('/product') }}">Products</a></li>
-          <li class="nav-item"><a class="nav-link" href="{{ url('/product/addform') }}">Add Product</a></li>
-        </ul>
-
-        <!-- kanan: cart dan user -->
-        <ul class="navbar-nav">
-          <li class="nav-item">
-            <a class="nav-link" href="#"><i class="bi bi-cart3"></i> Cart <span class="badge badge-pill badge-light">0</span></a>
-          </li>
-          <li class="nav-item dropdown">
-            <a class="nav-link dropdown-toggle" id="userMenu" data-toggle="dropdown" href="#">User</a>
-            <div class="dropdown-menu dropdown-menu-right">
-              <a class="dropdown-item" href="#">Profile</a>
-              <a class="dropdown-item" href="#">Logout</a>
-            </div>
-          </li>
-        </ul>
+  <!-- TOP BAR (user di kanan) -->
+  <div class="topbar">
+    <div class="container-fluid d-flex justify-content-between align-items-center">
+      <div>
+        <!-- tombol toggle untuk mobile -->
+        <button id="sidebarToggle" class="btn btn-sm btn-outline-secondary d-md-none">
+          <i class="bi bi-list"></i>
+        </button>
+        <!-- Nama brand (kecil) -->
+        <a class="navbar-brand text-light ml-2 d-none d-md-inline" href="{{ url('/') }}">iPhoneStore</a>
       </div>
-    </div>
-  </nav>
 
-  <!-- MAIN CONTENT -->
-  <main>
-    <div class="container-fluid main-container">
-      <div class="card shadow-sm">
-        <div class="card-body">
-          @yield('content')
+      <div class="d-flex align-items-center">
+        <a class="text-light mr-3" href="#"><i class="bi bi-cart3"></i> <span class="badge badge-light text-dark">0</span></a>
+        <div class="dropdown">
+          <a class="text-light dropdown-toggle" id="userMenu" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">
+            <i class="bi bi-person-circle" style="font-size:1.25rem"></i>
+          </a>
+          <div class="dropdown-menu dropdown-menu-right" aria-labelledby="userMenu">
+            <a class="dropdown-item" href="#">Profile</a>
+            <a class="dropdown-item" href="#">Logout</a>
+          </div>
         </div>
       </div>
     </div>
-  </main>
+  </div>
+
+  <!-- APP WRAPPER: SIDEBAR + CONTENT -->
+  <div class="app-wrapper">
+    <!-- SIDEBAR KIRI -->
+    <aside class="sidebar d-none d-md-block">
+      <nav class="nav flex-column px-2">
+        <a class="nav-link {{ ($key ?? '') == 'home' ? 'active' : '' }}" href="{{ url('/') }}"><i class="bi bi-house"></i> Home</a>
+        <a class="nav-link {{ ($key ?? '') == 'product' ? 'active' : '' }}" href="{{ url('/product') }}"><i class="bi bi-phone"></i> Products</a>
+        <a class="nav-link {{ ($key ?? '') == 'add' ? 'active' : '' }}" href="{{ url('/product/addform') }}"><i class="bi bi-plus-square"></i> Add Product</a>
+        <hr class="border-secondary my-2">
+        <!-- tambahan menu jika perlu -->
+        <a class="nav-link" href="#"><i class="bi bi-gear"></i> Settings</a>
+      </nav>
+    </aside>
+
+    <!-- SIDEBAR versi mobile (hidden by default) -->
+    <aside id="mobileSidebar" class="sidebar d-md-none">
+      <nav class="nav flex-column px-2">
+        <a class="nav-link" href="{{ url('/') }}">Home</a>
+        <a class="nav-link" href="{{ url('/product') }}">Products</a>
+        <a class="nav-link" href="{{ url('/product/addform') }}">Add Product</a>
+      </nav>
+    </aside>
+
+    <!-- MAIN CONTENT -->
+    <main class="main-content">
+      <div class="container-fluid">
+        <div class="content-card shadow-sm p-3">
+          @yield('content')
+        </div>
+      </div>
+    </main>
+  </div>
 
   <!-- FOOTER -->
-  <footer class="text-white text-center py-3 mt-auto shadow-sm">
+  <footer>
     &copy; {{ date('Y') }} iPhoneStore. All rights reserved.
   </footer>
 
