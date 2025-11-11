@@ -29,9 +29,11 @@
 
     /* layout konten utama: sidebar kiri + main content */
     .app-wrapper { display:flex; flex:1; min-height:0; } /* min-height:0 agar anak flex scrollable */
+
+    /* SIDEBAR: warna diubah ke #121212 sesuai permintaan */
     .sidebar {
       width: 240px;
-      background: #151515;
+      background: #121212;         /* ganti warna navigasi side */
       border-right: 1px solid #222;
       padding-top: 1.25rem;
       flex-shrink: 0;
@@ -46,18 +48,20 @@
       color:#fff;
     }
 
+    /* MAIN CONTENT: padding lebih kecil supaya konten lebih dekat ke header/side */
     .main-content {
       flex:1;
-      padding: 1.5rem;
+      padding: 0.75rem 1rem; /* kurangin jarak atas dan sisi */
       overflow:auto;
+      background: #121212;
     }
 
-    /* content card tanpa shadow, latar lebih gelap */
+    /* content-card tanpa padding (kamu minta hapus p-3) dan background #121212 */
     .content-card {
-      background:#0a0a0a;         /* konten utama: hitam lebih pekat */
-      border: 1px solid #1a1a1a;  /* outline ringan */
+       
       box-shadow: none !important;/* pastikan shadow dimatikan */
       color:#e6e6e6;
+      /* jangan beri padding di sini — element child (halaman) akan mengatur spacing sendiri */
     }
 
     /* footer menempel di bawah */
@@ -71,7 +75,7 @@
     }
 
     /* =========================
-       Table: outline style + zebra rows
+       Table: outline style + zebra rows (sesuaikan palet)
        ========================= */
     .table.outline {
       width: 100%;
@@ -88,16 +92,16 @@
       color: #e6e6e6;
     }
     .table.outline thead th {
-      background: #151515; /* warna nav/header */
+      background: #121212; /* gunakan warna navigasi side/header yang sama */
       color: #f0f0f0;
       font-weight: 600;
       border-bottom-width: 2px;
     }
     .table.outline tbody tr:nth-child(odd) {
-      background: #0f0f0f; /* ganjil: gelap */
+      background: #111111; /* ganjil: gelap */
     }
     .table.outline tbody tr:nth-child(even) {
-      background: #141414; /* genap: sedikit lebih terang */
+      background: #161616; /* genap: sedikit lebih terang */
     }
     .table.outline tbody tr:hover {
       background: #1f1f1f;
@@ -172,7 +176,8 @@
 
     <main class="main-content">
       <div class="container-fluid">
-        <div class="content-card p-3">
+        <!-- perhatikan: p-3 dihilangkan seperti permintaan -->
+        <div class="content-card">
           @yield('content')
         </div>
       </div>
@@ -238,7 +243,6 @@
         const raw = priceInput.value.replace(/\D/g, "");
         const priceRawEl = form.querySelector('input[name="price_raw"]');
         if (priceRawEl) priceRawEl.value = raw;
-        // ensure controller receives 'price' numeric if it expects that field
         if (!form.querySelector('input[name="price"]')) {
           const hiddenPrice = document.createElement('input');
           hiddenPrice.type = 'hidden';
