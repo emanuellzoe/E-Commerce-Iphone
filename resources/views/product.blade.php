@@ -24,7 +24,16 @@
         <td>{{ $p->description }}</td>
         <td>Rp {{ number_format($p->price, 0, ',', '.') }}</td>
         <td>{{ $p->stock }}</td>
-        <td><img src="{{ asset('storage/' . $p->image) }}" alt="{{ $p->product_name }}" class="img-thumbnail" style="max-width: 100px;"></td>
+        <td>
+          <td>
+            @if ($p->image)
+              <img src="{{ asset('storage/' . $p->image) }}" alt="{{ $p->product_name }}" class="img-thumbnail" style="max-width: 100px;">
+            @else
+              <img src="{{ asset('storage/products/no-image.jpg') }}" alt="No Image" class="img-thumbnail" style="max-width: 100px;">
+            @endif
+          </td>
+
+        </td>
       </tr>
       @endforeach
     </tbody>
