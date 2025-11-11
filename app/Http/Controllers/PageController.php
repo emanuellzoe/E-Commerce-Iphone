@@ -1,6 +1,7 @@
 <?php
 
 namespace App\Http\Controllers;
+use Illuminate\Support\Facades\Storage;
 
 use Illuminate\Http\Request;
 use App\Ecommerce; // pastikan model ini sudah ada di folder App
@@ -31,13 +32,30 @@ class PageController extends Controller
 
     // Fungsi untuk menyimpan produk baru
     public function productSave(Request $request)
-    {
-        Ecommerce::create([
-            'product_name' => $request->product_name,
-            'description' => $request->description,
-            'price' => $request->price,
-            'stock' => $request->stock,
-        ]);
-        return redirect('/product')->with('success', 'Produk berhasil ditambahkan!');
+{
+    // validasi singkat
+    $request->validate([
+        'product_name' => 'required|string|max:255',
+        'price' => 'required|numeric',
+        'stock' => 'required|integer',
+        'image' => 'nullable|image|max:2048',
+    ]);
+
+    $imageName = null;
+    if ($request->hasFile('image')) {
+        $imageName = time() . '-' . $request->file('image')->getClientOriginalName();
+        // simpan di storage/app/public/products/...
+        $request->file('image')->storeAs('products', $imageName, 'public');
     }
+
+    Ecommerce::create([
+        'product_name' => $request->product_name,
+        'description' => $request->description,
+        'price' => $request->price,
+        'stock' => $request->stock,
+        'image' => $imageName,
+    ]);
+
+    return redirect('/product')->with('success', 'Produk berhasil ditambahkan!');
+}
 }

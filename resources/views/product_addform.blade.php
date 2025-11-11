@@ -25,7 +25,8 @@
     </div>
     <div class="form-group">
       <label for="image">Gambar Produk</label>
-      <input type="file" class="form-control" name="image" id="image" required>
+      <input type="file" class="form-control" accept="image/*" name="image" id="image">
+      <!-- saya hilangkan required agar update tanpa gambar tetap boleh; jika wajib, tambahkan kembali -->
     </div>
 
     <button type="submit" class="btn btn-primary mt-3">Simpan</button>
