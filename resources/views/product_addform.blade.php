@@ -5,7 +5,7 @@
 @section('content')
 <div class="container">
   <h3 class="mb-4 text-light">Tambah Produk Baru</h3>
-  <form action="{{ url('/product/save') }}" method="POST">
+  <form action="{{ url('/product/save') }}" method="POST" enctype="multipart/form-data">
     @csrf
     <div class="form-group">
       <label for="product_name">Nama Produk</label>
