@@ -23,6 +23,11 @@
       <label for="stock">Stok</label>
       <input type="number" name="stock" id="stock" class="form-control" required>
     </div>
+    <div class="form-group">
+      <label for="image">Gambar Produk</label>
+      <input type="file" class="form-control" name="image" id="image">
+    </div>
+
     <button type="submit" class="btn btn-primary mt-3">Simpan</button>
   </form>
 </div>

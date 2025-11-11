@@ -13,6 +13,7 @@
         <th>Deskripsi</th>
         <th>Harga</th>
         <th>Stok</th>
+        <th>Gambar</th>
       </tr>
     </thead>
     <tbody>
@@ -23,6 +24,7 @@
         <td>{{ $p->description }}</td>
         <td>Rp {{ number_format($p->price, 0, ',', '.') }}</td>
         <td>{{ $p->stock }}</td>
+        <td><img src="{{ asset('storage/' . $p->image) }}" alt="{{ $p->product_name }}" class="img-thumbnail" style="max-width: 100px;"></td>
       </tr>
       @endforeach
     </tbody>
