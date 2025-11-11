@@ -51,7 +51,7 @@
     /* MAIN CONTENT: padding lebih kecil supaya konten lebih dekat ke header/side */
     .main-content {
       flex:1;
-      padding: 0.75rem 1rem; /* kurangin jarak atas dan sisi */
+      padding: 0.75rem ; /* kurangin jarak atas dan sisi */
       overflow:auto;
       background: #121212;
     }
