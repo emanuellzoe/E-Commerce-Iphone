@@ -1,92 +1,84 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <link rel="stylesheet"
+          href="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/css/bootstrap.min.css"
+          integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T"
+          crossorigin="anonymous">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.13.1/font/bootstrap-icons.min.css">
     <link rel="stylesheet" href="https://cdn.datatables.net/2.3.4/css/dataTables.dataTables.css">
-     <style>
-    /* halaman penuh dan warna dasar */
-    html, body { height:100%; margin:0; background:#0e0e0e; color:#e6e6e6; }
-    body { display:flex; flex-direction:column; min-height:100vh; }
 
-    /* header user atas (tipis) */
-    .topbar {
-      background: #151515;
-      border-bottom: 1px solid #222;
-      height:56px;
-      display:flex;
-      align-items:center;
-      padding:0 .75rem;
-    }
+    <style>
+      /* halaman penuh dan warna dasar */
+      html, body { height:100%; margin:0; background:#0e0e0e; color:#e6e6e6; }
+      body { display:flex; flex-direction:column; min-height:100vh; }
 
-    /* layout konten utama: sidebar kiri + main content */
-    .app-wrapper { display:flex; flex:1; min-height:0; } /* min-height:0 agar anak flex scrollable */
-    .sidebar {
-      width: 240px;
-      background: #151515;
-      border-right:1px solid #222;
-      padding-top: 1.25rem;
-      flex-shrink:0;
-      overflow:auto;
-    }
-    .sidebar .nav-link {
-      color: #cfcfcf;
-    }
-    .sidebar .nav-link.active, .sidebar .nav-link:hover {
-      background:#222;
-      color:#fff;
-    }
+      /* header user atas (tipis) */
+      .topbar {
+        background: #151515;
+        border-bottom: 1px solid #222;
+        height:56px;
+        display:flex;
+        align-items:center;
+        padding:0 .75rem;
+      }
 
-    .main-content {
-      flex:1;
-      padding: 1.5rem;
-      overflow:auto;
-    }
+      /* layout konten utama: sidebar kiri + main content */
+      .app-wrapper { display:flex; flex:1; min-height:0; } /* min-height:0 agar anak flex scrollable */
+      .sidebar {
+        width: 240px;
+        background: #151515;
+        border-right: 1px solid #222;
+        padding-top: 1.25rem;
+        flex-shrink: 0;
+        overflow: auto;
+        height: calc(100vh - 56px); /* agar sidebar berhenti sebelum footer */
+      }
+      .sidebar .nav-link {
+        color: #cfcfcf;
+      }
+      .sidebar .nav-link.active, .sidebar .nav-link:hover {
+        background:#222;
+        color:#fff;
+      }
 
-    /* card area untuk konten */
-    .content-card {
-      background:#1b1b1b;
-      border:1px solid #222;
-      color:#e6e6e6;
-      min-height:70vh; /* kerangka; nanti disesuaikan per halaman */
-    }
+      .main-content {
+        flex:1;
+        padding: 1.5rem;
+        overflow:auto;
+      }
 
-    /* footer menempel di bawah */
-    /* Footer dengan pembatas dari sidebar */
-    footer {
-      background: #151515;
-      color: #d0d0d0;
-      text-align: center;
-      padding: .75rem;
-      border-top: 1px solid #222; /* garis pembatas horizontal atas */
-      position: relative;
-    }
+      /* card area untuk konten */
+      .content-card {
+        background:#1b1b1b;
+        border:1px solid #222;
+        color:#e6e6e6;
+        min-height:70vh; /* kerangka; nanti disesuaikan per halaman */
+      }
 
-    /* Tambahkan garis vertikal pemisah di kiri footer */
-    footer::before {
-      content: "";
-      position: absolute;
-      left: 240px; /* lebar sidebar */
-      top: 0;
-      bottom: 0;
-      width: 1px;
-      background: #222; /* warna garis sesuai tema */
-    }
+      /* footer menempel di bawah */
+      footer {
+        background: #151515;
+        color: #d0d0d0;
+        text-align: center;
+        padding: .75rem;
+        border-top: 1px solid #222; /* garis pembatas horizontal atas */
+        position: relative;
+      }
 
+      /* responsive: sidebar collapsible on small screens */
+      @media (max-width: 767px) {
+        .sidebar { position:fixed; left:-260px; top:56px; height:calc(100% - 56px); z-index:1030; transition:left .25s; }
+        .sidebar.show { left:0; }
+        .main-content { padding-top:1rem; }
+      }
 
-    /* responsive: sidebar collapsible on small screens */
-    @media (max-width: 767px) {
-      .sidebar { position:fixed; left:-260px; top:56px; height:calc(100% - 56px); z-index:1030; transition:left .25s; }
-      .sidebar.show { left:0; }
-      .main-content { padding-top:1rem; }
-      footer::before {
-      display: none;
-  }
-    }
-  </style>
+      /* optional small tweak for DataTable visuals in dark theme */
+      table.dataTable thead th { border-bottom: 0; }
+    </style>
 </head>
 <body>
 
@@ -155,57 +147,80 @@
     &copy; {{ date('Y') }} iPhoneStore. All rights reserved.
   </footer>
 
-    
 
+  <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
+          integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
+          crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/popper.js@1.14.7/dist/umd/popper.min.js"
+          integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1"
+          crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/js/bootstrap.min.js"
+          integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
+          crossorigin="anonymous"></script>
+  <script src="https://cdn.datatables.net/2.3.4/js/dataTables.js"></script>
 
-    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
-        integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
-        crossorigin="anonymous"></script>
-    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.14.7/dist/umd/popper.min.js"
-        integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1"
-        crossorigin="anonymous"></script>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/js/bootstrap.min.js"
-        integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
-        crossorigin="anonymous"></script>
-    <script src="https://cdn.datatables.net/2.3.4/js/dataTables.js"></script>    
-    <script>
-        new DataTable('#example');
-    </script>
-    <script>
-      document.addEventListener("DOMContentLoaded", function () {
-        const priceInput = document.getElementById("price");
-        if (!priceInput) return; // keluar kalau halaman tidak punya input harga
+  <script>
+    // init datatable (safe: will silently fail if #example not present)
+    try { new DataTable('#example'); } catch(e){}
 
+    // toggle sidebar on mobile
+    document.getElementById('sidebarToggle')?.addEventListener('click', function () {
+      document.getElementById('mobileSidebar')?.classList.toggle('show');
+    });
+
+    // Price formatting: global script used by pages with #price input
+    document.addEventListener("DOMContentLoaded", function () {
+      const priceInput = document.getElementById("price");
+      if (!priceInput) return; // keluar kalau halaman tidak punya input harga
+
+      // create hidden raw field if not already present
+      if (!priceInput.closest('form').querySelector('input[name="price_raw"]')) {
         const priceRaw = document.createElement("input");
         priceRaw.type = "hidden";
         priceRaw.name = "price_raw";
         priceInput.parentNode.appendChild(priceRaw);
+      } else {
+        // reuse if exists
+      }
 
-        function formatRupiah(value) {
-          const digits = value.replace(/\D/g, "");
-          if (!digits) return "";
-          return digits.replace(/\B(?=(\d{3})+(?!\d))/g, ".");
-        }
+      function formatRupiah(value) {
+        const digits = value.replace(/\D/g, "");
+        if (!digits) return "";
+        return digits.replace(/\B(?=(\d{3})+(?!\d))/g, ".");
+      }
 
-        priceInput.addEventListener("input", () => {
-          const cursor = priceInput.selectionStart;
-          const raw = priceInput.value.replace(/\D/g, "");
-          const formatted = formatRupiah(raw);
-          priceInput.value = formatted;
-          priceRaw.value = raw;
-          const diff = formatted.length - raw.length;
-          priceInput.setSelectionRange(cursor + diff, cursor + diff);
-        });
-
-        // sebelum form dikirim, pastikan harga dikirim sebagai angka
-        const form = priceInput.closest("form");
-        form.addEventListener("submit", () => {
-          const raw = priceInput.value.replace(/\D/g, "");
-          priceInput.value = raw;
-        });
+      priceInput.addEventListener("input", () => {
+        const cursor = priceInput.selectionStart;
+        const raw = priceInput.value.replace(/\D/g, "");
+        const formatted = formatRupiah(raw);
+        priceInput.value = formatted;
+        const priceRawEl = priceInput.closest('form').querySelector('input[name="price_raw"]');
+        if (priceRawEl) priceRawEl.value = raw;
+        const diff = formatted.length - raw.length;
+        // adjust cursor to feel natural
+        priceInput.setSelectionRange(cursor + diff, cursor + diff);
       });
-      </script>
-    
-    
+
+      // sebelum form dikirim, kirim angka murni
+      const form = priceInput.closest("form");
+      form?.addEventListener("submit", () => {
+        const raw = priceInput.value.replace(/\D/g, "");
+        // set hidden price_raw and optionally set visible price to raw
+        const priceRawEl = form.querySelector('input[name="price_raw"]');
+        if (priceRawEl) priceRawEl.value = raw;
+        // if controller expects 'price' field, copy raw into a hidden 'price' field
+        if (!form.querySelector('input[name="price_numeric"]')) {
+          const hiddenPrice = document.createElement('input');
+          hiddenPrice.type = 'hidden';
+          hiddenPrice.name = 'price';
+          hiddenPrice.value = raw;
+          form.appendChild(hiddenPrice);
+        } else {
+          form.querySelector('input[name="price_numeric"]').value = raw;
+        }
+      });
+    });
+  </script>
+
 </body>
 </html>
