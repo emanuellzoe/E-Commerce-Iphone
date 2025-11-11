@@ -55,18 +55,36 @@
     }
 
     /* footer menempel di bawah */
+    /* Footer dengan pembatas dari sidebar */
     footer {
-      background:#151515;
-      color:#d0d0d0;
-      text-align:center;
-      padding:.75rem;
+      background: #151515;
+      color: #d0d0d0;
+      text-align: center;
+      padding: .75rem;
+      border-top: 1px solid #222; /* garis pembatas horizontal atas */
+      position: relative;
     }
+
+    /* Tambahkan garis vertikal pemisah di kiri footer */
+    footer::before {
+      content: "";
+      position: absolute;
+      left: 240px; /* lebar sidebar */
+      top: 0;
+      bottom: 0;
+      width: 1px;
+      background: #222; /* warna garis sesuai tema */
+    }
+
 
     /* responsive: sidebar collapsible on small screens */
     @media (max-width: 767px) {
       .sidebar { position:fixed; left:-260px; top:56px; height:calc(100% - 56px); z-index:1030; transition:left .25s; }
       .sidebar.show { left:0; }
       .main-content { padding-top:1rem; }
+      footer::before {
+      display: none;
+  }
     }
   </style>
 </head>
