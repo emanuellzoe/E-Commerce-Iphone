@@ -20,7 +20,6 @@
             <th>Harga</th>
             <th>Stok</th>
             <th>Gambar</th>
-            <th>Aksi</th>
           </tr>
         </thead>
         <tbody>
@@ -38,21 +37,10 @@
                   <img src="{{ asset('storage/products/no-image.jpg') }}" alt="No Image" class="img-thumbnail" style="max-width:100px;">
                 @endif
               </td>
-              <td>
-                <a href="{{ url('/product/edit/'.$p->id) }}" class="btn btn-sm btn-warning"><i class="bi bi-pencil-square"></i></a>
-
-                <!-- lebih aman gunakan form POST + method DELETE, tapi contoh GET -->
-                <form action="{{ url('/product/delete/'.$p->id) }}" method="POST" style="display:inline">
-                  @csrf
-                  @method('DELETE')
-                  <button type="submit" class="btn btn-sm btn-danger" onclick="return confirm('Hapus produk ini?')">
-                    <i class="bi bi-trash3"></i>
-                  </button>
-                </form>
-              </td>
             </tr>
           @endforeach
         </tbody>
+
       </table>
     </div>
   </div>
