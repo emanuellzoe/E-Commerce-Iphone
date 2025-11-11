@@ -153,6 +153,41 @@
     <script>
         new DataTable('#example');
     </script>
+    <script>
+      document.addEventListener("DOMContentLoaded", function () {
+        const priceInput = document.getElementById("price");
+        if (!priceInput) return; // keluar kalau halaman tidak punya input harga
+
+        const priceRaw = document.createElement("input");
+        priceRaw.type = "hidden";
+        priceRaw.name = "price_raw";
+        priceInput.parentNode.appendChild(priceRaw);
+
+        function formatRupiah(value) {
+          const digits = value.replace(/\D/g, "");
+          if (!digits) return "";
+          return digits.replace(/\B(?=(\d{3})+(?!\d))/g, ".");
+        }
+
+        priceInput.addEventListener("input", () => {
+          const cursor = priceInput.selectionStart;
+          const raw = priceInput.value.replace(/\D/g, "");
+          const formatted = formatRupiah(raw);
+          priceInput.value = formatted;
+          priceRaw.value = raw;
+          const diff = formatted.length - raw.length;
+          priceInput.setSelectionRange(cursor + diff, cursor + diff);
+        });
+
+        // sebelum form dikirim, pastikan harga dikirim sebagai angka
+        const form = priceInput.closest("form");
+        form.addEventListener("submit", () => {
+          const raw = priceInput.value.replace(/\D/g, "");
+          priceInput.value = raw;
+        });
+      });
+      </script>
+    
     
 </body>
 </html>

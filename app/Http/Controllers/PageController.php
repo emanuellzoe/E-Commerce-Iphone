@@ -30,10 +30,8 @@ class PageController extends Controller
         return view('product_addform');
     }
 
-    // Fungsi untuk menyimpan produk baru
     public function productSave(Request $request)
 {
-    // validasi singkat
     $request->validate([
         'product_name' => 'required|string|max:255',
         'price' => 'required|numeric',
@@ -44,7 +42,6 @@ class PageController extends Controller
     $imageName = null;
     if ($request->hasFile('image')) {
         $imageName = time() . '-' . $request->file('image')->getClientOriginalName();
-        // simpan di storage/app/public/products/...
         $request->file('image')->storeAs('products', $imageName, 'public');
     }
 

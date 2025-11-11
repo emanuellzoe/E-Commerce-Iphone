@@ -17,7 +17,10 @@
     </div>
     <div class="form-group">
       <label for="price">Harga</label>
-      <input type="number" name="price" id="price" class="form-control" required>
+      <!-- input yang terlihat untuk user (format ada titik) -->
+      <input type="text" name="price" id="price" class="form-control" required autocomplete="off" inputmode="numeric" />
+      <!-- hidden input yang berisi angka murni untuk dikirim ke server -->
+      <input type="hidden" name="price_raw" id="price_raw">
     </div>
     <div class="form-group">
       <label for="stock">Stok</label>
