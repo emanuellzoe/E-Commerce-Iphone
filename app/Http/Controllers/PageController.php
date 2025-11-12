@@ -75,5 +75,39 @@ class PageController extends Controller
         return redirect('/product')->with('success', 'Produk berhasil dihapus!');
     }
 
-    pub
+    public function productUpdate(Request $request)
+    {
+        $request->validate([
+            'id' => 'required|exists:ecommerce,id',
+            'product_name' => 'required|string|max:255',
+            'price' => 'required|numeric',
+            'stock' => 'required|integer',
+            'image' => 'nullable|image|max:2048',
+        ]);
+
+        $product = Ecommerce::find($request->id);
+
+        // Update data produk
+        $product->product_name = $request->product_name;
+        $product->description = $request->description;
+        $product->price = $request->price;
+        $product->stock = $request->stock;
+
+        // Handle update gambar jika ada
+        if ($request->hasFile('image')) {
+            // Hapus gambar lama jika ada
+            if ($product->image) {
+                Storage::disk('public')->delete('products/' . $product->image);
+            }
+
+            // Simpan gambar baru
+            $imageName = time() . '-' . $request->file('image')->getClientOriginalName();
+            $request->file('image')->storeAs('products', $imageName, 'public');
+            $product->image = $imageName;
+        }
+
+        $product->save();
+
+        return redirect('/product')->with('success', 'Produk berhasil diperbarui!');
+    }
 }
