@@ -74,4 +74,6 @@ class PageController extends Controller
 
         return redirect('/product')->with('success', 'Produk berhasil dihapus!');
     }
+
+    pub
 }
