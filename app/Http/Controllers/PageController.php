@@ -58,7 +58,7 @@ class PageController extends Controller
     public function productEdit($id)
     {
         $product = Ecommerce::find($id);
-        return view('product_edit', ['product' => $product]);
+        return view('productEdit', ['product' => $product]);
     }
 
     public function productDelete($id)
