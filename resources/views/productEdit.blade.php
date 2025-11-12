@@ -5,7 +5,7 @@
 @section('content')
 <div class="container">
     <h3 class="mb-4 text-light">Edit Produk</h3>
-    <form action="{{ url('/product/save') }}" method="post" enctype="multipart/form-data">
+    <form action="{{ url('/product/update/' . $product->id) }}" method="post" enctype="multipart/form-data">
     @csrf
     @method('PUT')
 

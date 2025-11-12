@@ -17,4 +17,4 @@ Route::get('product/addform', 'PageController@productAddForm');
 Route::post('product/save', 'PageController@productSave');
 Route::get('product/edit/{id}', 'PageController@productEdit');
 Route::get('product/delete/{id}', 'PageController@productDelete');
-Route::put('product/save', 'PageController@productUpdate');
+Route::put('product/update/{id}', 'PageController@productUpdate');
