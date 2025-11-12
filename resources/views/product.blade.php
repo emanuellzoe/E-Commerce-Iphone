@@ -40,8 +40,8 @@
           @endif
         </td>
         <td>
-          <a href="" class="btn btn-success"> <i class="bi bi-pencil-square"></i></a>
-          <a href="" class="btn btn-danger"> <i class="bi bi-trash"></i></a>
+          <a href="/product/edit/{{ $p->id }}" class="btn btn-success"> <i class="bi bi-pencil-square"></i></a>
+          <a href="/product/delete/{{ $p->id }}" class="btn btn-danger"> <i class="bi bi-trash"></i></a>
         </td>
       </tr>
       @endforeach
