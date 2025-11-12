@@ -55,4 +55,23 @@ class PageController extends Controller
 
     return redirect('/product')->with('success', 'Produk berhasil ditambahkan!');
 }
+    public function productEdit($id)
+    {
+        $product = Ecommerce::find($id);
+        return view('product_edit', ['product' => $product]);
+    }
+
+    public function productDelete($id)
+    {
+        $product = Ecommerce::findOrFail($id);
+
+        // Hapus gambar dari storage jika ada
+        if ($product->image) {
+            Storage::disk('public')->delete('products/' . $product->image);
+        }
+
+        $product->delete();
+
+        return redirect('/product')->with('success', 'Produk berhasil dihapus!');
+    }
 }

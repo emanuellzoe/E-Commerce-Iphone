@@ -15,3 +15,5 @@ Route::get('/', 'PageController@home');
 Route::get('product', 'PageController@product');
 Route::get('product/addform', 'PageController@productAddForm');
 Route::post('product/save', 'PageController@productSave');
+Route::get('product/edit/{id}', 'PageController@productEdit');
+Route::get('product/delete/{id}', 'PageController@productDelete');
