@@ -83,7 +83,7 @@ class PageController extends Controller
         'price' => 'required|numeric',
         'stock' => 'required|integer',
         'description' => 'nullable|string',
-        'image' => 'nullable|image|max:2048',
+        'image' => 'nullable|image|max:10048',
     ]);
 
     $product = Ecommerce::find($id);
