@@ -15,6 +15,7 @@
         <th>Harga</th>
         <th>Stok</th>
         <th>Gambar</th>
+        <th>Aksi</th>
       </tr>
     </thead>
     <tbody>
@@ -37,6 +38,10 @@
                  class="img-thumbnail bg-transparent border-0 p-0"
                  style="max-width:90px;">
           @endif
+        </td>
+        <td>
+          <a href="" class="btn btn-success"> <i class="bi bi-pencil-square"></i></a>
+          <a href="" class="btn btn-danger"> <i class="bi bi-trash"></i></a>
         </td>
       </tr>
       @endforeach
