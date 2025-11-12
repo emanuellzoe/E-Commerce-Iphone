@@ -4,8 +4,8 @@
 
 @section('content')
 <div class="container">
-    <h3 class="mb-4 text-light">Tambah Produk Baru</h3>
-    <form action="{{ url('/product/save') }}" method="POST" enctype="multipart/form-data">
+    <h3 class="mb-4 text-light">Edit Produk</h3>
+    <form action="{{ url('/product/save') }}" method="post" enctype="multipart/form-data">
     @csrf
     @method('PUT')
 
@@ -47,7 +47,8 @@
                 <img src="{{ asset('storage/products/no-image.jpg') }}"
                     alt="No Image"
                     class="img-thumbnail bg-transparent border-0 p-0"
-                    style="max-width:150px;">
+                    style="width:150px; height:150px; object-fit:cover; border-radius:8px;"
+>
             @endif
             <br><small><i>*foto sebelumnya</i></small>
         </div>
@@ -58,7 +59,7 @@
                 src=""
                 alt="Foto baru"
                 class="img-thumbnail bg-transparent border-0 p-0"
-                style="max-width:150px;">
+                style="width:150px; height:150px; object-fit:cover; border-radius:8px;">
             <br><small><i>*foto baru</i></small>
         </div>
     </div>
