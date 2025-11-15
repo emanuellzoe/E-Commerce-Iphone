@@ -90,7 +90,7 @@
 
 </div>
 
-<!-- Script Preview -->
+
 <script>
     document.getElementById('image').addEventListener('change', function(event) {
         const previewContainer = document.getElementById('preview-container');
