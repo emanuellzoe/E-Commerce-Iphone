@@ -156,6 +156,7 @@
                                 </div>
                             </div>
                         </a>
+            <a class="dropdown-item" href="/setting">Setting</a>
             <a class="dropdown-item" href="/logout">Logout</a>
           </div>
         </div>

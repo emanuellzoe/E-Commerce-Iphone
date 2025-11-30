@@ -6,6 +6,7 @@ use Illuminate\Support\Facades\Storage;
 use Illuminate\Http\Request;
 use App\User;
 use App\Ecommerce; // pastikan model ini sudah ada di folder App
+use Illuminate\Support\Facades\Auth;
 
 class PageController extends Controller
 {
@@ -153,6 +154,29 @@ class PageController extends Controller
         }
         $users->delete();
         return redirect('/users') -> with('alert', 'User has been deleted!');
+    }
+
+    public function setting()
+    {
+        return view('setting', ['key' => 'user']);
+    }
+
+    public function updatepass(Request $request)
+    {
+        $user = Auth::user();
+
+        if (!Auth::attempt([
+            'email' => $user->email,
+            'password' => $request->password_lama
+        ])) {
+            return redirect('/setting');
+        }
+
+        $user->update([
+            'password' => bcrypt($request->password_baru),
+        ]);
+
+        return redirect('/users')->with('alert','berhasil update password');
     }
 
 }
