@@ -5,6 +5,16 @@
 @section('content')
 <div class="container-fluid">
   <h3 class="mb-4 text-light">Daftar Produk iPhone</h3>
+  <!-- pop up -->
+  @if (session('alert'))
+    <div class="alert alert-warning alert-dismissible fade show" role="alert">
+        <strong>{{ session(key: 'alert') }}</strong>
+        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+        </button>
+    </div>
+    @endif
+
 
   <table id="example" class="table table-dark table-striped table-hover w-100">
     <thead>
