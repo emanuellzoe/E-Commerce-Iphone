@@ -18,3 +18,4 @@ Route::post('product/save', 'PageController@productSave');
 Route::get('product/edit/{id}', 'PageController@productEdit');
 Route::get('product/delete/{id}', 'PageController@productDelete');
 Route::put('product/update/{id}', 'PageController@productUpdate');
+Route::get('/users', 'PageController@users');

@@ -113,6 +113,11 @@ class PageController extends Controller
 
     return redirect('/product')->with('alert', 'Produk berhasil diperbarui!');
 }
-    
+    public function users(Request $request, $id):
+    {
+        $users = User::orderBy('id', 'desc')->get();
+        return view('users', ['key' => 'users', 'users' => $users]);
+
+    }
 
 }
