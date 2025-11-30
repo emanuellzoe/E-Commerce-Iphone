@@ -53,7 +53,7 @@ class PageController extends Controller
         'image' => $imageName,
     ]);
 
-    return redirect('/product')->with('success', 'Produk berhasil ditambahkan!');
+    return redirect('/product')->with('alert', 'Produk berhasil ditambahkan!');
 }
     public function productEdit($id)
     {
@@ -72,7 +72,7 @@ class PageController extends Controller
 
         $product->delete();
 
-        return redirect('/product')->with('success', 'Produk berhasil dihapus!');
+        return redirect('/product')->with('alert', 'Produk berhasil dihapus!');
     }
 
     public function productUpdate(Request $request, $id)
@@ -111,7 +111,8 @@ class PageController extends Controller
 
     $product->save();
 
-    return redirect('/product')->with('success', 'Produk berhasil diperbarui!');
+    return redirect('/product')->with('alert', 'Produk berhasil diperbarui!');
 }
+    
 
 }
