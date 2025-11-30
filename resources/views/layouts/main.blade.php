@@ -173,7 +173,7 @@
         <a class="nav-link {{ ($key ?? '') == 'add' ? 'active' : '' }}" href="{{ url('/product/addform') }}"><i class="bi bi-plus-square"></i> Add Product</a>
         <a class="nav-link {{ ($key ?? '') == 'users' ? 'active' : '' }}" href="{{ url('/users') }}"><i class="bi bi-bag"></i> Users</a>
         <hr class="border-secondary my-2">
-        <a class="nav-link" href="#"><i class="bi bi-gear"></i> Settings</a>
+        <a class="nav-link {{ ($key ?? '') == 'user' ? 'active' : '' }}" href="{{ url('/setting') }}"><i class="bi bi-gear"></i> Settings</a>
       </nav>
     </aside>
 
