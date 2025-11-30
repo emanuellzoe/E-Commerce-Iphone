@@ -11,19 +11,29 @@
 |
 */
 
-Route::get('/', 'PageController@home');
-Route::get('product', 'PageController@product');
-Route::get('product/addform', 'PageController@productAddForm');
-Route::post('product/save', 'PageController@productSave');
-Route::get('product/edit/{id}', 'PageController@productEdit');
-Route::get('product/delete/{id}', 'PageController@productDelete');
-Route::put('product/update/{id}', 'PageController@productUpdate');
-Route::get('/users', 'PageController@users');
-Route::get('/users/addform', 'PageController@userAddForm');
-Route::post('/users/save', 'PageController@userSave');
-Route::get('/users/delete/{id}', 'PageController@usersDeleteForm');
-Route::get('/login', 'AuthController@login');
-Route::get('/login','AuthController@login');
-Route::post('ceklogin','AuthController@ceklogin');
-Route::get('/logout','AuthController@logout');
+Route::group(['middleware' => 'auth'], function () {
+    //admin page
+    Route::get('/', 'PageController@home');
+    Route::get('product', 'PageController@product');
+    Route::get('product/addform', 'PageController@productAddForm');
+    Route::post('product/save', 'PageController@productSave');
+    Route::get('product/edit/{id}', 'PageController@productEdit');
+    Route::get('product/delete/{id}', 'PageController@productDelete');
+    Route::put('product/update/{id}', 'PageController@productUpdate');
+    Route::get('/users', 'PageController@users');
+    Route::get('/users/addform', 'PageController@userAddForm');
+    Route::post('/users/save', 'PageController@userSave');
+    Route::get('/users/delete/{id}', 'PageController@usersDeleteForm');
+    Route::get('/login', 'AuthController@login');
+    Route::get('/logout','AuthController@logout');
+});
+
+Route::group(['middleware' => 'guest'], function () {
+    //user biasa
+    Route::get('/login', 'AuthController@login');
+    Route::post('/ceklogin', 'AuthController@cekLogin');
+});
+
+Route::get('/setting','PageController@setting');
+Route::put('/updatepass','PageController@updatepass');
 
