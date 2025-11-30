@@ -21,3 +21,4 @@ Route::put('product/update/{id}', 'PageController@productUpdate');
 Route::get('/users', 'PageController@users');
 Route::get('/users/addform', 'PageController@userAddForm');
 Route::post('/users/save', 'PageController@userSave');
+Route::get('/users/delete/{id}', 'PageController@usersDeleteForm');

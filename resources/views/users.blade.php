@@ -39,7 +39,7 @@
                             @endif
                         </td>
                         <td>
-                            <a href="/users/deleteform/{{ $u->id }}" class="btn btn-danger"> <i class="bi bi-trash"></i></a>
+                            <a href="/users/delete/{{ $u->id }}" class="btn btn-danger"> <i class="bi bi-trash"></i></a>
             
                         </td>
                     </tr>

@@ -145,7 +145,7 @@ class PageController extends Controller
         return redirect('/users') -> with('alert', 'New user has been added!');
     }
 
-    public function usersdelete($id)
+    public function usersDeleteForm($id)
     {
         $users = User::find($id);
         if ($users->photo) {
