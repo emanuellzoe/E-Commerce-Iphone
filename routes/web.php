@@ -22,4 +22,7 @@ Route::get('/users', 'PageController@users');
 Route::get('/users/addform', 'PageController@userAddForm');
 Route::post('/users/save', 'PageController@userSave');
 Route::get('/users/delete/{id}', 'PageController@usersDeleteForm');
-Route::get('/login', 'AuthController@loginForm');
+Route::get('/login', 'AuthController@login');
+Route::get('/','AuthController@login');
+Route::post('ceklogin','AuthController@ceklogin');
+
