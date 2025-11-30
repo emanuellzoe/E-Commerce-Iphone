@@ -1,28 +1,42 @@
 @extends('layouts.main')
-@section('title', 'User')
+@section('title', 'Setting')
 @section('content')
-    <div class="card">
-        <div class="card-header"></div>
-        <div class="card-body">
-            <form action="/updatepass" method="post" enctype="multipart/form-data">
-                @csrf
-                @method('PUT')
-                <div class="form-group">
-                    <label for="password">Password Lama</label>
-                    <input type="text" name="password_lama" class="form-control" id="password_lama" required>
-                </div>
-                <div class="form-group">
-                    <label for="password_baru">Password Baru</label>
-                    <input type="text" name="password_baru" class="form-control" id="password_baru" required>
-                </div>
-                <div class="form-group">
-                    <label for="password_konfirmasi">Konfirmasi Password Baru</label>
-                    <input type="text" name="password_konfirmasi" class="form-control" id="password_konfirmasi" required>
-                </div>
-                <div>
-                    <button type="submit" class="btn btn-primary">Simpan</button>
-                </div>
-            </form>
+
+<div class="container">
+  <h2 class="mb-4 text-light">Ubah Password</h2>
+
+  <div>
+    <div class="card-body">
+
+      <form action="/updatepass" method="post" enctype="multipart/form-data" class="mx-auto" style="max-width:720px;">
+        @csrf
+        @method('PUT')
+
+        <div class="form-group mb-4">
+          <label for="password_lama" class="text-light">Password Lama</label>
+          <input type="password" name="password_lama" id="password_lama"
+                 class="form-control bg-white text-dark" required>
         </div>
+
+        <div class="form-group">
+          <label for="password_baru" class="text-light">Password Baru</label>
+          <input type="password" name="password_baru" id="password_baru"
+                 class="form-control bg-white text-dark" required>
+        </div>
+
+        <div class="form-group mb-4">
+          <label for="password_konfirmasi" class="text-light">Konfirmasi Password Baru</label>
+          <input type="password" name="password_konfirmasi" id="password_konfirmasi"
+                 class="form-control bg-white text-dark" required>
+        </div>
+
+        <div class="mb-3">
+          <button type="submit" class="btn btn-primary">Simpan</button>
+        </div>
+      </form>
+
     </div>
+  </div>
+</div>
+
 @endsection
