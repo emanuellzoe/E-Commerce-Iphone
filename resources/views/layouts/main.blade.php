@@ -146,7 +146,16 @@
             <i class="bi bi-person-circle" style="font-size:1.25rem"></i>
           </a>
           <div class="dropdown-menu dropdown-menu-right" aria-labelledby="userMenu">
-            <a class="dropdown-item" href="#">Profile</a>
+            <a class="dropdown-item" type="#">
+                            <div class="media">
+                                <img src="{{ Auth::user()->photo
+                                ? asset('storage/photo/' . Auth::user()->photo) : asset('/storage/photo/no-image.png') }}"
+                                    width="50" height="50" class="align-self-center mr-3" alt="...">
+                                <div class="media-body">
+                                    <h5 class="mt-0">{{ Auth::user()->name }}</h5>
+                                </div>
+                            </div>
+                        </a>
             <a class="dropdown-item" href="/logout">Logout</a>
           </div>
         </div>
