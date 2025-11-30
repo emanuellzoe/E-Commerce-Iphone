@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 use Illuminate\Support\Facades\Storage;
 
 use Illuminate\Http\Request;
+use App\User;
 use App\Ecommerce; // pastikan model ini sudah ada di folder App
 
 class PageController extends Controller
@@ -113,11 +114,10 @@ class PageController extends Controller
 
     return redirect('/product')->with('alert', 'Produk berhasil diperbarui!');
 }
-    public function users(Request $request, $id):
+    public function users()
     {
         $users = User::orderBy('id', 'desc')->get();
         return view('users', ['key' => 'users', 'users' => $users]);
-
     }
 
 }
