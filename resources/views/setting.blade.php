@@ -19,7 +19,7 @@
         </div>
 
         <div class="form-group">
-          <label for="password_baru" class="text-light">Password Baru</label>
+          <label for="password_baru" class="text-light">Password new</label>
           <input type="password" name="password_baru" id="password_baru"
                  class="form-control bg-white text-dark" required>
         </div>
