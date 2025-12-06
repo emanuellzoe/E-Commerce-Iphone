@@ -1,6 +1,7 @@
 <?php
 
 namespace App\Http\Controllers;
+
 use Illuminate\Support\Facades\Storage;
 
 use Illuminate\Http\Request;
@@ -18,12 +19,12 @@ class PageController extends Controller
 
     // Halaman daftar produk
     public function product()
-{
-    // Ambil data dari database, urutkan berdasarkan ID terbaru (descending)
-    $products = Ecommerce::orderBy('id', 'desc')->get();
+    {
+        // Ambil data dari database, urutkan berdasarkan ID terbaru (descending)
+        $products = Ecommerce::orderBy('id', 'desc')->get();
 
-    return view('product', ['key' => 'product', 'products' => $products]);
-}
+        return view('product', ['key' => 'product', 'products' => $products]);
+    }
 
 
     // Halaman form tambah produk
@@ -33,30 +34,30 @@ class PageController extends Controller
     }
 
     public function productSave(Request $request)
-{
-    $request->validate([
-        'product_name' => 'required|string|max:255',
-        'price' => 'required|numeric',
-        'stock' => 'required|integer',
-        'image' => 'nullable|image|max:2048',
-    ]);
+    {
+        $request->validate([
+            'product_name' => 'required|string|max:255',
+            'price' => 'required|numeric',
+            'stock' => 'required|integer',
+            'image' => 'nullable|image|max:2048',
+        ]);
 
-    $imageName = null;
-    if ($request->hasFile('image')) {
-        $imageName = time() . '-' . $request->file('image')->getClientOriginalName();
-        $request->file('image')->storeAs('products', $imageName, 'public');
+        $imageName = null;
+        if ($request->hasFile('image')) {
+            $imageName = time() . '-' . $request->file('image')->getClientOriginalName();
+            $request->file('image')->storeAs('products', $imageName, 'public');
+        }
+
+        Ecommerce::create([
+            'product_name' => $request->product_name,
+            'description' => $request->description,
+            'price' => $request->price,
+            'stock' => $request->stock,
+            'image' => $imageName,
+        ]);
+
+        return redirect('/product')->with('alert', 'Produk berhasil ditambahkan!');
     }
-
-    Ecommerce::create([
-        'product_name' => $request->product_name,
-        'description' => $request->description,
-        'price' => $request->price,
-        'stock' => $request->stock,
-        'image' => $imageName,
-    ]);
-
-    return redirect('/product')->with('alert', 'Produk berhasil ditambahkan!');
-}
     public function productEdit($id)
     {
         $product = Ecommerce::find($id);
@@ -78,43 +79,43 @@ class PageController extends Controller
     }
 
     public function productUpdate(Request $request, $id)
-{
-    // validasi input
-    $request->validate([
-        'product_name' => 'required|string|max:255',
-        'price' => 'required|numeric',
-        'stock' => 'required|integer',
-        'description' => 'nullable|string',
-        'image' => 'nullable|image|max:10048',
-    ]);
+    {
+        // validasi input
+        $request->validate([
+            'product_name' => 'required|string|max:255',
+            'price' => 'required|numeric',
+            'stock' => 'required|integer',
+            'description' => 'nullable|string',
+            'image' => 'nullable|image|max:10048',
+        ]);
 
-    $product = Ecommerce::find($id);
+        $product = Ecommerce::find($id);
 
-    // update fields yang bukan file
-    $product->product_name = $request->product_name;
-    $product->description = $request->description;
-    $product->price = $request->price;
-    $product->stock = $request->stock;
+        // update fields yang bukan file
+        $product->product_name = $request->product_name;
+        $product->description = $request->description;
+        $product->price = $request->price;
+        $product->stock = $request->stock;
 
-    // jika ada file baru, hapus file lama lalu simpan file baru
-    if ($request->hasFile('image')) {
-        // hapus gambar lama jika ada
-        if ($product->image) {
-            Storage::disk('public')->delete('products/' . $product->image);
+        // jika ada file baru, hapus file lama lalu simpan file baru
+        if ($request->hasFile('image')) {
+            // hapus gambar lama jika ada
+            if ($product->image) {
+                Storage::disk('public')->delete('products/' . $product->image);
+            }
+
+            // simpan file baru
+            $imageName = time() . '-' . $request->file('image')->getClientOriginalName();
+            $request->file('image')->storeAs('products', $imageName, 'public');
+
+            // set nama file ke model
+            $product->image = $imageName;
         }
 
-        // simpan file baru
-        $imageName = time() . '-' . $request->file('image')->getClientOriginalName();
-        $request->file('image')->storeAs('products', $imageName, 'public');
+        $product->save();
 
-        // set nama file ke model
-        $product->image = $imageName;
+        return redirect('/product')->with('alert', 'Produk berhasil diperbarui!');
     }
-
-    $product->save();
-
-    return redirect('/product')->with('alert', 'Produk berhasil diperbarui!');
-}
     public function users()
     {
         $users = User::orderBy('id', 'desc')->get();
@@ -128,12 +129,10 @@ class PageController extends Controller
 
     public function userSave(Request $request)
     {
-        if($request->hasFile('photo'))
-        {
-            $file_name = time().'-'.$request->file('photo')->getClientOriginalName();
-            $path = $request->file('photo')->storeAs('photo', $file_name,'public');
-        } else
-        {
+        if ($request->hasFile('photo')) {
+            $file_name = time() . '-' . $request->file('photo')->getClientOriginalName();
+            $path = $request->file('photo')->storeAs('photo', $file_name, 'public');
+        } else {
             $file_name = null;
             $path = null;
         }
@@ -143,17 +142,17 @@ class PageController extends Controller
             'password' => bcrypt($request->password),
             'photo' => $file_name
         ]);
-        return redirect('/users') -> with('alert', 'New user has been added!');
+        return redirect('/users')->with('alert', 'New user has been added!');
     }
 
     public function usersDeleteForm($id)
     {
         $users = User::find($id);
         if ($users->photo) {
-            Storage::disk('public')->delete('photo/'.$users->photo);
+            Storage::disk('public')->delete('photo/' . $users->photo);
         }
         $users->delete();
-        return redirect('/users') -> with('alert', 'User has been deleted!');
+        return redirect('/users')->with('alert', 'User has been deleted!');
     }
 
     public function setting()
@@ -176,7 +175,6 @@ class PageController extends Controller
             'password' => bcrypt($request->password_baru),
         ]);
 
-        return redirect('/users')->with('alert','berhasil update password');
+        return redirect('/users')->with('alert', 'berhasil update password');
     }
-
 }

@@ -1,5 +1,6 @@
 <?php
 
+use Illuminate\Support\Facades\Route;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -25,7 +26,7 @@ Route::group(['middleware' => 'auth'], function () {
     Route::post('/users/save', 'PageController@userSave');
     Route::get('/users/delete/{id}', 'PageController@usersDeleteForm');
     Route::get('/login', 'AuthController@login');
-    Route::get('/logout','AuthController@logout');
+    Route::get('/logout', 'AuthController@logout');
 });
 
 Route::group(['middleware' => 'guest'], function () {
@@ -34,6 +35,5 @@ Route::group(['middleware' => 'guest'], function () {
     Route::post('/ceklogin', 'AuthController@cekLogin');
 });
 
-Route::get('/setting','PageController@setting');
-Route::put('/updatepass','PageController@updatepass');
-
+Route::get('/setting', 'PageController@setting');
+Route::put('/updatepass', 'PageController@updatepass');
