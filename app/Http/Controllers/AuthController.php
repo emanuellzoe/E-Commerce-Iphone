@@ -12,23 +12,19 @@ class AuthController extends Controller
     {
         return view('login');
     }
-    
+
 
     public function cekLogin(Request $request)
     {
-        if (!Auth::attempt(['email' => $request->email,'password'=> $request->password]))
-        {
-            return redirect('/login')->with('alert','Email atau password salah!');
+        if (!Auth::attempt(['email' => $request->email, 'password' => $request->password])) {
+            return redirect('/login')->with('alert', 'Email atau password salah!');
+        } else {
+            return redirect('/home');
         }
-        else
-        {
-            return redirect('/');
-        }
-
     }
     public function logout()
     {
         Auth::logout();
-        return redirect('/login')->with('alert','Anda sudah logout');
+        return redirect('/login')->with('alert', 'Anda sudah logout');
     }
 }
