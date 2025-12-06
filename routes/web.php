@@ -31,9 +31,10 @@ Route::group(['middleware' => 'auth'], function () {
 
 Route::group(['middleware' => 'guest'], function () {
     //user biasa
-    Route::get('/', 'AuthController@login')->name('login');
+    Route::get('/login', 'AuthController@login')->name('login');
     Route::post('/ceklogin', 'AuthController@cekLogin');
-    Route::get('/search', 'VisitorController@search');
+    Route::get('/', 'VisitorController@search');
+    Route::get('actsearch', 'VisitorController@actsearch');
 });
 
 Route::get('/setting', 'PageController@setting');
