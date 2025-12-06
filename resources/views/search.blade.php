@@ -8,53 +8,86 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
     <!-- Bootstrap CSS -->
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
-        integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <link rel="stylesheet"
+          href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+          integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T"
+          crossorigin="anonymous">
+
+    <!-- Bootstrap Icons (bi bi-search) -->
+    <link rel="stylesheet"
+          href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.13.1/font/bootstrap-icons.min.css">
+
+    <style>
+        body {
+            background: #121212;
+            color: #e6e6e6;
+        }
+
+        .search-wrapper {
+            margin-top: 2rem;
+        }
+
+        .search-title {
+            color: #f5f5f5;
+        }
+
+        .search-subtitle {
+            color: #a0a0a0;
+        }
+
+        .form-control.bg-dark {
+            background-color: #1b1b1b !important;
+        }
+    </style>
 </head>
 
-<div class="row mb-4">
-    <div class="col-12">
-        <h3 class="mb-1">Search </h3>
-        <small class="text-muted">Cari akan kolom di bawah.</small>
-        <hr class="border-secondary">
-    </div>
-</div>
-
-<div class="row justify-content-start">
-    <div class="col-md-6 col-lg-5">
-        <form action="{{ url('actsearch') }}" method="GET">
-            @csrf
-
-            <div class="input-group">
-                <input type="text"
-                    name="search"
-                    class="form-control bg-dark text-light border-secondary"
-                    id="search"
-                    placeholder="Search movie..."
-                    value="{{ request('search') }}">
-
-                <div class="input-group-append">
-                    <button type="submit" class="btn btn-info">
-                        <i class="bi bi-search"></i> Search
-                    </button>
-                </div>
+<body>
+    <div class="container search-wrapper">
+        <div class="row mb-4">
+            <div class="col-12">
+                <h3 class="mb-1 search-title">Search</h3>
+                <small class="search-subtitle">Cari produk menggunakan kolom di bawah.</small>
+                <hr class="border-secondary">
             </div>
-        </form>
-    </div>
-</div>
+        </div>
 
+        <div class="row justify-content-start">
+            <div class="col-md-6 col-lg-5">
+                <form action="{{ url('actsearch') }}" method="GET">
+                    @csrf
+
+                    <div class="input-group">
+                        <input
+                            type="text"
+                            name="search"
+                            class="form-control bg-dark text-light border-secondary"
+                            id="search"
+                            placeholder="Search product..."
+                            value="{{ request('search') }}"
+                        >
+
+                        <div class="input-group-append">
+                            <button type="submit" class="btn btn-info">
+                                <i class="bi bi-search"></i> Search
+                            </button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
 
     <!-- Optional JavaScript -->
     <!-- jQuery first, then Popper.js, then Bootstrap JS -->
     <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
-        integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
-        crossorigin="anonymous"></script>
+            integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
+            crossorigin="anonymous"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"
-        integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1"
-        crossorigin="anonymous"></script>
+            integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1"
+            crossorigin="anonymous"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
-        integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
-        crossorigin="anonymous"></script>
+            integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
+            crossorigin="anonymous"></script>
 </body>
 
 </html>
