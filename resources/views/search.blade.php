@@ -2,7 +2,7 @@
 <html lang="en">
 
 <head>
-    <title>Search Movie</title>
+    <title>Search</title>
     <!-- Required meta tags -->
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
@@ -12,29 +12,36 @@
         integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
 </head>
 
-<body>
-    <div class="container-fluid">
-        <div class="row">
-            <div class="col-md-12 bg-info py-4">
-
-            </div>
-        </div>
+<div class="row mb-4">
+    <div class="col-12">
+        <h3 class="mb-1">Search </h3>
+        <small class="text-muted">Cari akan kolom di bawah.</small>
+        <hr class="border-secondary">
     </div>
+</div>
 
-    <div class="container">
-        <div class="row">
-            <div class="col-md-12">
-                <form action="actsearch" method="GET">
-                    @csrf
-                    <div class="input-group pt-3">
-                        <!-- <label for="search">search...</label> -->
-                        <input type="text" name="search" class="form-control" id="search" placeholder="Search...">
-                        <button type="submit" class="btn btn-info">Search</button>
-                    </div>
-                </form>
+<div class="row justify-content-start">
+    <div class="col-md-6 col-lg-5">
+        <form action="{{ url('actsearch') }}" method="GET">
+            @csrf
+
+            <div class="input-group">
+                <input type="text"
+                    name="search"
+                    class="form-control bg-dark text-light border-secondary"
+                    id="search"
+                    placeholder="Search movie..."
+                    value="{{ request('search') }}">
+
+                <div class="input-group-append">
+                    <button type="submit" class="btn btn-info">
+                        <i class="bi bi-search"></i> Search
+                    </button>
+                </div>
             </div>
-        </div>
+        </form>
     </div>
+</div>
 
 
     <!-- Optional JavaScript -->
