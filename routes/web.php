@@ -14,7 +14,7 @@ use Illuminate\Support\Facades\Route;
 
 Route::group(['middleware' => 'auth'], function () {
     //admin page
-    Route::get('/', 'PageController@home');
+    Route::get('/home', 'PageController@home');
     Route::get('product', 'PageController@product');
     Route::get('product/addform', 'PageController@productAddForm');
     Route::post('product/save', 'PageController@productSave');
@@ -31,8 +31,9 @@ Route::group(['middleware' => 'auth'], function () {
 
 Route::group(['middleware' => 'guest'], function () {
     //user biasa
-    Route::get('/login', 'AuthController@login');
+    Route::get('/', 'AuthController@login')->name('login');
     Route::post('/ceklogin', 'AuthController@cekLogin');
+    Route::get('/searchiphone', 'VisitorController@searchIphone');
 });
 
 Route::get('/setting', 'PageController@setting');
