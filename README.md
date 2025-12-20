@@ -1,4 +1,4 @@
-#  Apple Store E-Commerce (Laravel)
+#  E-Commerce Apple (Laravel)
 
 > A premium, dark-themed E-Commerce web application designed for selling Apple products. Features a modern glassmorphism UI, real-time search, admin dashboard with stock alerts, and WhatsApp integration.
 
@@ -47,8 +47,8 @@
 
 1.  **Clone the Repository**
     ```bash
-    git clone https://github.com/username/apple-store-ecommerce.git
-    cd apple-store-ecommerce
+    git clone https://github.com/emanuellzoe/E-Commerce-Apple.git
+    cd E-Commerce-Apple
     ```
 
 2.  **Install Dependencies**
