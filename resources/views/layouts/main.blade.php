@@ -11,120 +11,179 @@
         crossorigin="anonymous">
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.13.1/font/bootstrap-icons.min.css">
   <link rel="stylesheet" href="https://cdn.datatables.net/2.3.4/css/dataTables.dataTables.css">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 
   <style>
-    /* halaman penuh dan warna dasar */
-    html, body { height:100%; margin:0; background:#0b0b0b; color:#e6e6e6; }
-    body { display:flex; flex-direction:column; min-height:100vh; }
+    /* --- Global Variables & Reset --- */
+    :root {
+      --bg-body: #000000;
+      --bg-card: #1c1c1e;
+      --bg-sidebar: #121212;
+      --text-main: #f5f5f7;
+      --text-muted: #86868b;
+      --accent-blue: #2997ff;
+      --accent-hover: #0071e3;
+      --glass-bg: rgba(28, 28, 30, 0.65);
+      --border-color: #38383a;
+    }
 
-    /* header user atas (tipis) */
+    body {
+      background-color: var(--bg-body);
+      color: var(--text-main);
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    a { text-decoration: none !important; transition: 0.2s ease; }
+    
+    /* --- Typography --- */
+    h1, h2, h3, h4, h5, h6 {
+      font-weight: 600;
+      letter-spacing: -0.02em;
+    }
+
+    /* --- Buttons (Apple Style) --- */
+    .btn {
+      border-radius: 980px; /* Pill shape */
+      font-weight: 500;
+      padding: 0.6rem 1.5rem;
+      transition: all 0.3s cubic-bezier(0,0,0.5,1);
+    }
+    .btn-primary {
+      background-color: var(--accent-blue);
+      border: none;
+    }
+    .btn-primary:hover {
+      background-color: var(--accent-hover);
+      transform: scale(1.02);
+    }
+    .btn-outline-light {
+      border: 1px solid var(--border-color);
+      color: var(--text-main);
+    }
+    .btn-outline-light:hover {
+      background: #fff;
+      color: #000;
+      border-color: #fff;
+    }
+
+    /* --- Sidebar & Layout --- */
     .topbar {
-      background: #151515;
-      border-bottom: 1px solid #222;
-      height:56px;
-      display:flex;
-      align-items:center;
-      padding:0 .75rem;
+      background: rgba(28, 28, 30, 0.95);
+      border-bottom: 1px solid var(--border-color);
+      height: 60px;
+      display: flex;
+      align-items: center;
+      padding: 0 1.5rem;
+      position: sticky;
+      top: 0;
+      z-index: 1040;
     }
 
-    /* layout konten utama: sidebar kiri + main content */
-    .app-wrapper { display:flex; flex:1; min-height:0; } /* min-height:0 agar anak flex scrollable */
+    .app-wrapper {
+      display: flex;
+      min-height: calc(100vh - 60px);
+    }
 
-    /* SIDEBAR: warna diubah ke #121212 sesuai permintaan */
     .sidebar {
-      width: 240px;
-      background: #121212;         /* ganti warna navigasi side */
-      border-right: 1px solid #222;
-      padding-top: 1.25rem;
+      width: 260px;
+      background: var(--bg-card);
+      border-right: 1px solid var(--border-color);
+      padding: 2rem 1rem;
       flex-shrink: 0;
-      overflow: auto;
-      height: calc(100vh - 56px); /* agar sidebar berhenti sebelum footer */
+      display: flex;
+      flex-direction: column;
     }
+    
     .sidebar .nav-link {
-      color: #cfcfcf;
+      color: var(--text-muted);
+      border-radius: 12px;
+      margin-bottom: 8px;
+      padding: 12px 16px;
+      font-size: 0.95rem;
+      font-weight: 500;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      transition: all 0.2s ease;
     }
-    .sidebar .nav-link.active, .sidebar .nav-link:hover {
-      background:#222;
-      color:#fff;
+    
+    .sidebar .nav-link i { font-size: 1.1rem; }
+
+    .sidebar .nav-link:hover {
+      background: rgba(255, 255, 255, 0.05);
+      color: #fff;
+    }
+    
+    .sidebar .nav-link.active {
+      background: var(--accent-blue);
+      color: #fff;
+      box-shadow: 0 4px 12px rgba(41, 151, 255, 0.3);
     }
 
-    /* MAIN CONTENT: padding lebih kecil supaya konten lebih dekat ke header/side */
     .main-content {
-      flex:1;
-      padding: 0.75rem ; /* kurangin jarak atas dan sisi */
-      overflow:auto;
-      background: #121212;
+      flex: 1;
+      padding: 2rem;
+      background: var(--bg-body);
+      overflow-y: auto;
+    }
+    
+    .card {
+      background-color: var(--bg-card);
+      border: 1px solid var(--border-color);
+      border-radius: 18px;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+      overflow: hidden;
     }
 
-    /* content-card tanpa padding (kamu minta hapus p-3) dan background #121212 */
-    .content-card {
-       
-      box-shadow: none !important;/* pastikan shadow dimatikan */
-      color:#e6e6e6;
-      /* jangan beri padding di sini — element child (halaman) akan mengatur spacing sendiri */
-    }
-
-    /* footer menempel di bawah */
-    footer {
-      background: #151515;
-      color: #d0d0d0;
-      text-align: center;
-      padding: .75rem;
-      border-top: 1px solid #222;
-      position: relative;
-    }
-
-    /* =========================
-       Table: outline style + zebra rows (sesuaikan palet)
-       ========================= */
+    /* --- Tables (Admin) --- */
     .table.outline {
-      width: 100%;
-      border-collapse: collapse;
-      background: transparent;
-      margin-bottom: 0;
-      border: 1px solid #222;
-    }
-    .table.outline th,
-    .table.outline td {
-      border: 1px solid #272727;
-      padding: 12px 10px;
-      vertical-align: middle;
-      color: #e6e6e6;
+      border-collapse: separate;
+      border-spacing: 0 8px; /* Spacing between rows */
+      border: none;
     }
     .table.outline thead th {
-      background: #121212; /* gunakan warna navigasi side/header yang sama */
-      color: #f0f0f0;
-      font-weight: 600;
-      border-bottom-width: 2px;
+      background: transparent;
+      border: none;
+      color: var(--text-muted);
+      font-size: 0.85rem;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
     }
-    .table.outline tbody tr:nth-child(odd) {
-      background: #111111; /* ganjil: gelap */
+    .table-dark {
+      background-color: transparent;
     }
-    .table.outline tbody tr:nth-child(even) {
-      background: #161616; /* genap: sedikit lebih terang */
+    .table-dark td, .table-dark th, .table-dark thead th {
+      border-color: var(--border-color);
     }
-    .table.outline tbody tr:hover {
-      background: #1f1f1f;
+    /* Row styling */
+    tbody tr {
+      background-color: var(--bg-card) !important;
+      transition: transform 0.2s;
     }
-    .table.outline td img {
-      max-width: 90px;
-      height: auto;
-      display: block;
-      margin-left: auto;
-      margin-right: auto;
-      border-radius: 4px;
-      border: 1px solid #222;
-      background: #0b0b0b;
+    tbody tr:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+      z-index: 10;
+      position: relative;
     }
+    td:first-child { border-top-left-radius: 12px; border-bottom-left-radius: 12px; }
+    td:last-child { border-top-right-radius: 12px; border-bottom-right-radius: 12px; }
 
-    @media (max-width: 767px) {
-      .sidebar { position:fixed; left:-260px; top:56px; height:calc(100% - 56px); z-index:1030; transition:left .25s; }
-      .sidebar.show { left:0; }
-      .main-content { padding-top:1rem; }
+    /* Form Inputs */
+    .form-control {
+      background-color: #2c2c2e;
+      border: 1px solid transparent;
+      border-radius: 12px;
+      color: #fff;
+      padding: 12px 15px;
     }
-
-    /* small visual tweaks for datatable header */
-    table.dataTable thead th { border-bottom: 0; }
+    .form-control:focus {
+      background-color: #3a3a3c;
+      border-color: var(--accent-blue);
+      box-shadow: 0 0 0 2px rgba(41, 151, 255, 0.3);
+      color: #fff;
+    }
   </style>
 </head>
 <body>

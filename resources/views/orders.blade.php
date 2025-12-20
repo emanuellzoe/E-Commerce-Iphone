@@ -3,53 +3,51 @@
 @section('title', 'Daftar Orderan')
 
 @section('content')
-<div class="container-fluid">
-  <h3 class="mb-4 text-light">Daftar Orderan Masuk</h3>
+<div class="d-flex justify-content-between align-items-center mb-4">
+  <h3 class="text-light m-0">Orderan Masuk</h3>
+</div>
 
-  <table id="example" class="table table-dark table-striped table-hover w-100">
+<div class="table-responsive">
+  <table id="example" class="table outline w-100">
     <thead>
       <tr>
         <th>No</th>
         <th>Tanggal</th>
-        <th>Nama Customer</th>
+        <th>Customer</th>
         <th>Produk</th>
-        <th>Harga</th>
-        <th>Pengiriman</th>
+        <th>Metode</th>
         <th>Status</th>
       </tr>
     </thead>
     <tbody>
       @foreach ($orders as $idx => $o)
       <tr>
-        <td>{{ $idx + 1 }}</td>
-        <td>{{ $o->created_at->format('d M Y H:i') }}</td>
+        <td class="text-center text-muted">{{ $idx + 1 }}</td>
         <td>
-            <div class="font-weight-bold">{{ $o->customer_name }}</div>
-            <small class="text-muted">{{ $o->customer_address }}</small>
+            <div class="text-white font-weight-500">{{ $o->created_at->format('d M Y') }}</div>
+            <div class="small text-muted">{{ $o->created_at->format('H:i') }} WIB</div>
+        </td>
+        <td>
+            <div class="font-weight-bold text-white">{{ $o->customer_name }}</div>
+            <div class="small text-muted text-truncate" style="max-width: 200px;">{{ $o->customer_address }}</div>
         </td>
         <td>
             @if($o->product)
-                {{ $o->product->product_name }}
+                <div class="text-white">{{ $o->product->product_name }}</div>
+                <div class="small text-accent">Rp {{ number_format($o->product->price, 0, ',', '.') }}</div>
             @else
-                <span class="text-danger">Produk Dihapus</span>
-            @endif
-        </td>
-        <td>
-            @if($o->product)
-                Rp {{ number_format($o->product->price, 0, ',', '.') }}
-            @else
-                -
+                <span class="text-danger italic">Produk Dihapus</span>
             @endif
         </td>
         <td>
             @if($o->delivery_option == 'delivery')
-                <span class="badge badge-info">Delivery</span>
+                <div class="badge badge-primary px-3 py-2 rounded-pill" style="background: rgba(41, 151, 255, 0.15); color: #2997ff; border: 1px solid rgba(41, 151, 255, 0.3);">Delivery</div>
             @else
-                <span class="badge badge-warning">Pickup</span>
+                <div class="badge badge-warning px-3 py-2 rounded-pill" style="background: rgba(255, 193, 7, 0.15); color: #ffc107; border: 1px solid rgba(255, 193, 7, 0.3);">Pickup</div>
             @endif
         </td>
         <td>
-            <span class="badge badge-secondary">{{ strtoupper($o->status) }}</span>
+            <span class="badge badge-secondary px-3 py-2 rounded-pill" style="background: rgba(255, 255, 255, 0.1); border: 1px solid #444;">{{ strtoupper($o->status) }}</span>
         </td>
       </tr>
       @endforeach
