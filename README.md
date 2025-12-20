@@ -1,40 +1,77 @@
-#  E-Commerce Apple (Laravel)
+#  E-Commerce Apple Store (Laravel)
 
-> A premium, dark-themed E-Commerce web application designed for selling Apple products. Features a modern glassmorphism UI, real-time search, admin dashboard with stock alerts, and WhatsApp integration.
+> **Aplikasi E-Commerce Premium Berbasis Web untuk Penjualan Produk Apple.**
+>
+> Proyek ini dirancang dengan antarmuka **Modern Dark Mode** (Glassmorphism), dilengkapi fitur pencarian instan (Live Search), manajemen stok cerdas, dan integrasi pemesanan langsung.
 
 ![Apple Store Banner](https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg)
 
-## ✨ Key Features
+## 📖 Deskripsi Proyek
 
-### 🛍️ User Experience (Front-End)
-*   **Premium Dark UI:** "Apple-style" aesthetics with glassmorphism, smooth animations, and a clean dark theme.
-*   **Live Search (AJAX):** Instantly search products by **Name**, **Description**, or **Price** without reloading the page.
-*   **Hero Landing Page:** Animated intro sequence revealing products smoothly.
-*   **Product Detail:** Comprehensive product showcase with large visuals and stock information.
-*   **Direct Purchase:**
-    *   **Order Form:** Modal-based checkout system (Delivery/Pickup).
-    *   **WhatsApp Integration:** "Chat with Admin" button pre-fills a message with the specific product details.
-*   **Responsive Design:** Fully optimized for Desktop, Tablet, and Mobile.
+Aplikasi ini dibangun menggunakan framework **Laravel** dengan fokus pada User Experience (UX) yang elegan dan kemudahan manajemen bagi admin. Sistem ini membagi peran menjadi dua: **Pengunjung (Visitor)** yang dapat mencari dan memesan produk, serta **Administrator** yang mengelola inventaris, pesanan, dan pengguna.
 
-### 🛠️ Admin Dashboard (Back-End)
-*   **Dashboard Overview:**
-    *   **Real-time Notification:** Red notification badge on the sidebar showing the count of **Pending Orders**.
-*   **Product Management (CRUD):**
-    *   Add, Edit, and Delete products with image upload support.
-    *   **Smart Stock Alert:** Rows turn **Red** and show a warning badge when stock is **≤ 5**.
-    *   **Auto-Cleanup:** Automatically deletes old product images from storage when a product is deleted.
-*   **Order Management:**
-    *   View incoming orders with customer details (Name, Address, Delivery Method).
-    *   Clear status indicators.
-*   **User Management:** Manage admin/staff accounts with circular avatar previews.
-*   **Secure Authentication:** Powered by Laravel Auth (Login/Logout).
+Desain antarmuka terinspirasi dari estetika Apple, menggunakan warna gelap, transparansi (glass effect), dan animasi halus untuk memberikan kesan premium.
+
+## ✨ Fitur Utama
+
+### 🛍️ Modul Pengunjung (User Features)
+1.  **Premium Hero Landing Page:**
+    *   Animasi intro yang elegan saat halaman dimuat (Judul & Search Bar muncul perlahan).
+    *   Desain responsif yang menyesuaikan dengan Desktop, Tablet, dan Mobile.
+2.  **Live Search (Pencarian Instan):**
+    *   Pengunjung dapat mencari produk berdasarkan **Nama**, **Deskripsi**, atau **Harga**.
+    *   Hasil pencarian muncul secara *real-time* tanpa reload halaman (AJAX).
+3.  **Halaman Detail Produk:**
+    *   Showcase produk dengan gambar besar.
+    *   Informasi stok dan harga yang jelas.
+4.  **Sistem Pemesanan (Direct Order):**
+    *   **Beli Sekarang:** Modal popup untuk mengisi Nama, Alamat, dan Metode Pengiriman (Delivery/Pickup).
+    *   **Notifikasi Sukses:** Alert konfirmasi otomatis setelah pesanan berhasil dibuat.
+5.  **Integrasi WhatsApp:**
+    *   Tombol "Tanya via WhatsApp" yang otomatis membuka chat ke nomor admin dengan template pesan berisi detail produk.
+
+### 🛠️ Modul Administrator (Admin Dashboard)
+1.  **Dashboard Modern (Dark UI):**
+    *   Navigasi sidebar yang solid dan konsisten.
+    *   Antarmuka tabel yang bersih dan mudah dibaca.
+2.  **Notifikasi Order Real-time:**
+    *   **Badge Merah** pada ikon keranjang di header yang menunjukkan jumlah pesanan baru (Pending).
+    *   Posisi badge presisi dan tidak terpotong.
+3.  **Manajemen Produk (CRUD):**
+    *   Tambah, Edit, Hapus produk dengan upload gambar.
+    *   **Smart Stock Alert:** Baris produk otomatis berubah warna **Merah** jika stok menipis (≤ 5), memudahkan admin melakukan restock.
+4.  **Manajemen Order:**
+    *   Melihat daftar pesanan masuk lengkap dengan data pembeli.
+    *   Status indikator pengiriman (Delivery/Pickup).
+5.  **Manajemen User:**
+    *   Mengelola akun staff/admin.
+    *   Tampilan foto profil berbentuk lingkaran sempurna (Avatar).
+6.  **Keamanan:**
+    *   Sistem Login/Logout aman menggunakan Laravel Auth.
+    *   Konfirmasi Hapus Data menggunakan **Modal Popup** (bukan alert browser biasa) untuk mencegah kesalahan klik.
+
+## 📖 Panduan Penggunaan (User Manual)
+
+### Skenario 1: Pengunjung Berbelanja
+1.  **Akses Website:** Buka halaman utama, nikmati animasi intro.
+2.  **Cari Barang:** Ketik "iPhone" atau "15 Juta" di kolom pencarian. Produk akan langsung tampil.
+3.  **Lihat Detail:** Klik produk untuk melihat spesifikasi.
+4.  **Order:**
+    *   Klik **Beli Sekarang** -> Isi Form -> Konfirmasi.
+    *   Atau klik **WhatsApp** untuk negosiasi langsung.
+
+### Skenario 2: Admin Mengelola Toko
+1.  **Login:** Masuk melalui tombol "Login" di pojok kanan atas.
+2.  **Cek Orderan:** Lihat ikon tas di atas. Jika ada angka merah, klik untuk melihat pesanan baru.
+3.  **Kelola Stok:** Buka menu *Products*. Jika ada baris merah, segera edit stok produk tersebut.
+4.  **Hapus Data:** Klik tombol sampah. Konfirmasi pada popup yang muncul.
 
 ## 🚀 Technology Stack
 
 *   **Framework:** Laravel 6.x (PHP)
 *   **Database:** MySQL
 *   **Frontend:** Blade Templates, Bootstrap 4, Custom CSS (Glassmorphism), jQuery (AJAX).
-*   **Assets:** FontAwesome / Bootstrap Icons.
+*   **Assets:** Bootstrap Icons, Apple SVG Vectors.
 
 ## 📦 Installation Guide
 
@@ -43,7 +80,7 @@
 *   Composer
 *   MySQL Server (XAMPP/Laragon/Docker)
 
-### Steps
+### Steps to Run
 
 1.  **Clone the Repository**
     ```bash
@@ -57,59 +94,30 @@
     ```
 
 3.  **Environment Setup**
-    *   Copy the example environment file:
-        ```bash
-        cp .env.example .env
-        ```
-    *   Open `.env` and configure your database settings:
+    *   Copy file `.env`: `cp .env.example .env`
+    *   Konfigurasi database di `.env`:
         ```env
         DB_DATABASE=ecommerce_db
         DB_USERNAME=root
         DB_PASSWORD=
         ```
 
-4.  **Generate Key**
+4.  **Generate Key & Migrate**
     ```bash
     php artisan key:generate
-    ```
-
-5.  **Database Migration & Seeding**
-    Run the migrations to create the required tables (`users`, `ecommerce`, `orders`).
-    ```bash
     php artisan migrate
     ```
-    *(Optional) Seed dummy data if available:*
-    ```bash
-    php artisan db:seed
-    ```
 
-6.  **Storage Link**
-    Link the public storage to serve product images.
+5.  **Link Storage (Penting untuk Gambar)**
     ```bash
     php artisan storage:link
     ```
 
-7.  **Run the Server**
+6.  **Run Server**
     ```bash
     php artisan serve
     ```
-    Access the app at: `http://localhost:8000`
-
-## 📂 Project Structure
-
-*   `app/Http/Controllers/VisitorController.php` - Handles public pages (Search, Live Search, Order).
-*   `app/Http/Controllers/PageController.php` - Handles Admin pages (Product CRUD, Users, Orders).
-*   `resources/views/search.blade.php` - The main landing page with Live Search.
-*   `resources/views/layouts/main.blade.php` - The Admin Dashboard master layout.
-*   `public/js/smooth-scroll.js` - Custom script for global smooth scrolling and ripple effects.
-
-## 🎨 UI/UX Highlights
-
-*   **Glassmorphism:** Translucent navbars and cards using `backdrop-filter: blur()`.
-*   **Animations:**
-    *   `heroFadeIn`: Landing page title animation.
-    *   `ripple`: Click feedback on buttons.
-    *   `hover`: Smooth scaling on product cards.
+    Buka: `http://localhost:8000`
 
 ## 📝 License
 
