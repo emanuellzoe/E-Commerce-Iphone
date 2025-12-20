@@ -3,12 +3,12 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Support\Facades\Storage;
-
 use Illuminate\Http\Request;
 use App\User;
 use App\Ecommerce; // pastikan model ini sudah ada di folder App
 use App\Order;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Log;
 
 class PageController extends Controller
 {
@@ -63,7 +63,10 @@ class PageController extends Controller
             'image' => $imageName,
         ]);
 
-        return redirect('/product')->with('alert', 'Produk berhasil ditambahkan!');
+        return redirect('/product')->with([
+            'alert-type' => 'success',
+            'alert-message' => 'Produk berhasil ditambahkan!'
+        ]);
     }
     public function productEdit($id)
     {
@@ -73,16 +76,27 @@ class PageController extends Controller
 
     public function productDelete($id)
     {
-        $product = Ecommerce::findOrFail($id);
+        try {
+            $product = Ecommerce::findOrFail($id);
 
-        // Hapus gambar dari storage jika ada
-        if ($product->image) {
-            Storage::disk('public')->delete('products/' . $product->image);
+            // Hapus gambar dari storage jika ada
+            if ($product->image) {
+                Storage::disk('public')->delete('products/' . $product->image);
+            }
+
+            $product->delete();
+
+            return redirect('/product')->with([
+                'alert-type' => 'success',
+                'alert-message' => 'Produk berhasil dihapus!'
+            ]);
+        } catch (\Exception $e) {
+            Log::error('Error deleting product: ' . $e->getMessage());
+            return redirect('/product')->with([
+                'alert-type' => 'danger',
+                'alert-message' => 'Gagal menghapus produk. Kemungkinan produk ini terikat dengan data lain (misal: pesanan).'
+            ]);
         }
-
-        $product->delete();
-
-        return redirect('/product')->with('alert', 'Produk berhasil dihapus!');
     }
 
     public function productUpdate(Request $request, $id)
@@ -121,7 +135,10 @@ class PageController extends Controller
 
         $product->save();
 
-        return redirect('/product')->with('alert', 'Produk berhasil diperbarui!');
+        return redirect('/product')->with([
+            'alert-type' => 'success',
+            'alert-message' => 'Produk berhasil diperbarui!'
+        ]);
     }
     public function users()
     {
@@ -149,17 +166,39 @@ class PageController extends Controller
             'password' => bcrypt($request->password),
             'photo' => $file_name
         ]);
-        return redirect('/users')->with('alert', 'New user has been added!');
+        return redirect('/users')->with([
+            'alert-type' => 'success',
+            'alert-message' => 'User baru berhasil ditambahkan!'
+        ]);
     }
 
     public function usersDeleteForm($id)
     {
-        $users = User::find($id);
-        if ($users->photo) {
-            Storage::disk('public')->delete('photo/' . $users->photo);
+        try {
+            // Jangan biarkan user menghapus dirinya sendiri
+            if (Auth::id() == $id) {
+                return redirect('/users')->with([
+                    'alert-type' => 'danger',
+                    'alert-message' => 'Anda tidak bisa menghapus akun Anda sendiri.'
+                ]);
+            }
+
+            $user = User::findOrFail($id);
+            if ($user->photo) {
+                Storage::disk('public')->delete('photo/' . $user->photo);
+            }
+            $user->delete();
+            return redirect('/users')->with([
+                'alert-type' => 'success',
+                'alert-message' => 'User berhasil dihapus!'
+            ]);
+        } catch (\Exception $e) {
+            Log::error('Error deleting user: ' . $e->getMessage());
+            return redirect('/users')->with([
+                'alert-type' => 'danger',
+                'alert-message' => 'Gagal menghapus user karena terjadi error server.'
+            ]);
         }
-        $users->delete();
-        return redirect('/users')->with('alert', 'User has been deleted!');
     }
 
     public function setting()

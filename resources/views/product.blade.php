@@ -10,9 +10,14 @@
   </div>
 
   <!-- pop up -->
-  @if (session('alert'))
-    <div class="alert alert-success alert-dismissible fade show" role="alert" style="background: rgba(40,167,69,0.2); border: 1px solid #28a745; color: #fff;">
-        <strong>{{ session('alert') }}</strong>
+  @if (session('alert-message'))
+    @php
+        $alertType = session('alert-type', 'info');
+        $alertBg = ($alertType == 'success') ? 'rgba(40,167,69,0.2)' : 'rgba(220,53,69,0.2)';
+        $alertBorder = ($alertType == 'success') ? '#28a745' : '#dc3545';
+    @endphp
+    <div class="alert alert-{{ $alertType }} alert-dismissible fade show" role="alert" style="background: {{ $alertBg }}; border: 1px solid {{ $alertBorder }}; color: #fff;">
+        <strong>{{ session('alert-message') }}</strong>
         <button type="button" class="close" data-dismiss="alert" aria-label="Close">
             <span aria-hidden="true">&times;</span>
         </button>
@@ -44,10 +49,12 @@
             <td>
               @if ($p->image)
                 <img src="{{ asset('storage/products/' . $p->image) }}"
-                     alt="{{ $p->product_name }}">
+                     alt="{{ $p->product_name }}"
+                     style="width: 80px; height: 80px; object-fit: cover; border-radius: 12px; border: 1px solid #444;">
               @else
                 <img src="{{ asset('storage/products/no-image.jpg') }}"
-                     alt="No Image">
+                     alt="No Image"
+                     style="width: 80px; height: 80px; object-fit: cover; border-radius: 12px; border: 1px solid #444;">
               @endif
             </td>
             <td>

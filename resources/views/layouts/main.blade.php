@@ -353,9 +353,7 @@
     &copy; {{ date('Y') }} iPhoneStore. All rights reserved.
   </footer>
 
-  <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
-          integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
-          crossorigin="anonymous"></script>
+  <script src="https://code.jquery.com/jquery-3.3.1.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
   <script src="https://cdn.jsdelivr.net/npm/popper.js@1.14.7/dist/umd/popper.min.js"
           integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1"
           crossorigin="anonymous"></script>
@@ -364,8 +362,8 @@
           crossorigin="anonymous"></script>
   <script src="https://cdn.datatables.net/2.3.4/js/dataTables.js"></script>
   
-  <!-- Custom Smooth Scroll & Animations -->
-  <script src="{{ asset('js/smooth-scroll.js') }}"></script>
+  <!-- Custom Smooth Scroll & Animations (NONAKTIFKAN KARENA MENYEBABKAN KONFLIK) -->
+  <!-- <script src="{{ asset('js/smooth-scroll.js') }}"></script> -->
 
   <!-- Delete Confirmation Modal -->
   <div class="modal fade" id="deleteModal" tabindex="-1" role="dialog" aria-hidden="true">
@@ -388,11 +386,17 @@
 
   <script>
     // Handle Delete Modal
-    $('#deleteModal').on('show.bs.modal', function (event) {
-      var button = $(event.relatedTarget);
-      var url = button.data('url');
-      var modal = $(this);
-      modal.find('#confirmDeleteBtn').attr('href', url);
+    $(document).ready(function() {
+      console.log("Delete modal script is ready."); // For Debugging
+      $('#deleteModal').on('show.bs.modal', function (event) {
+        console.log("Delete modal is opening."); // For Debugging
+        var button = $(event.relatedTarget); 
+        var url = button.data('url'); 
+        console.log("Delete URL found:", url); // For Debugging
+        
+        var modal = $(this);
+        modal.find('#confirmDeleteBtn').attr('href', url);
+      });
     });
 
     // init datatable (aman jika #example tidak ada)
