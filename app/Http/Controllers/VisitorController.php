@@ -32,7 +32,9 @@ class VisitorController extends Controller
         
         $products = Ecommerce::query()
             ->when($search, function ($query) use ($search) {
-                return $query->where('product_name', 'LIKE', '%' . $search . '%');
+                return $query->where('product_name', 'LIKE', '%' . $search . '%')
+                             ->orWhere('description', 'LIKE', '%' . $search . '%')
+                             ->orWhere('price', 'LIKE', '%' . $search . '%');
             })
             ->orderBy('id', 'desc')
             ->get();
