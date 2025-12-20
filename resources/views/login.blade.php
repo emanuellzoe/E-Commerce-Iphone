@@ -117,5 +117,6 @@
         <a href="{{ url('/') }}" class="back-link">Kembali ke Beranda</a>
     </div>
 
+    <script src="{{ asset('js/smooth-scroll.js') }}"></script>
 </body>
 </html>

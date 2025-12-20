@@ -47,7 +47,7 @@
           @endif
         </td>
         <td class="text-right">
-          <button class="btn btn-outline-danger btn-sm rounded-circle p-2" title="Delete User" data-toggle="modal" data-target="#deleteModal" data-url="/users/delete/{{ $u->id }}">
+          <button class="btn btn-outline-danger btn-sm rounded-circle d-inline-flex align-items-center justify-content-center" title="Delete User" data-toggle="modal" data-target="#deleteModal" data-url="/users/delete/{{ $u->id }}" style="width: 32px; height: 32px; padding: 0;">
               <i class="bi bi-trash"></i>
           </button>
         </td>

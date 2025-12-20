@@ -60,6 +60,7 @@
     .btn-outline-light {
       border: 1px solid var(--border-color);
       color: var(--text-main);
+      background: transparent;
     }
     .btn-outline-light:hover {
       background: #fff;
@@ -70,6 +71,8 @@
     /* --- Sidebar & Layout --- */
     .topbar {
       background: rgba(28, 28, 30, 0.95);
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
       border-bottom: 1px solid var(--border-color);
       height: 60px;
       display: flex;
@@ -78,6 +81,10 @@
       position: sticky;
       top: 0;
       z-index: 1040;
+    }
+    /* Reset navbar brand color for dark mode */
+    .navbar-brand, .topbar a.text-light {
+        color: #f5f5f7 !important;
     }
 
     .app-wrapper {
@@ -108,7 +115,7 @@
       transition: all 0.2s ease;
     }
     
-    .sidebar .nav-link i { font-size: 1.1rem; }
+    .sidebar .nav-link i { font-size: 1.1rem; color: inherit; }
 
     .sidebar .nav-link:hover {
       background: rgba(255, 255, 255, 0.05);
@@ -184,6 +191,52 @@
       box-shadow: 0 0 0 2px rgba(41, 151, 255, 0.3);
       color: #fff;
     }
+
+    /* --- Dropdown Menu (Glass Effect) --- */
+    .dropdown-menu {
+      background: rgba(28, 28, 30, 0.95);
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+      border: 1px solid var(--border-color);
+      border-radius: 12px;
+      box-shadow: 0 10px 40px rgba(0,0,0,0.5);
+      padding: 0.5rem;
+      margin-top: 10px;
+    }
+    
+    .dropdown-item {
+      color: #fff !important; /* Force white text */
+      border-radius: 8px;
+      padding: 8px 12px;
+      transition: all 0.2s;
+    }
+    
+    .dropdown-item:hover, .dropdown-item:focus {
+      background: var(--accent-blue);
+      color: #fff !important;
+      text-decoration: none;
+    }
+    
+    .dropdown-divider {
+      border-top: 1px solid var(--border-color);
+      margin: 0.5rem 0;
+    }
+
+    /* Media object in dropdown */
+    .dropdown-item .media img {
+      width: 40px !important; 
+      height: 40px !important; 
+      min-width: 40px; /* Prevent squashing */
+      border-radius: 50%; 
+      object-fit: cover;
+      border: 1px solid #444;
+    }
+    .dropdown-item .media h5 {
+      font-size: 0.95rem;
+      margin-bottom: 0;
+      font-weight: 600;
+      color: #fff !important; /* Ensure username is white */
+    }
   </style>
 </head>
 <body>
@@ -203,11 +256,11 @@
             $pendingOrders = \App\Order::where('status', 'pending')->count();
         @endphp
         
-        <a class="text-light mr-4 position-relative" href="{{ url('/orders') }}" title="Orderan Masuk">
-            <i class="bi bi-bag" style="font-size:1.25rem"></i>
+        <a class="text-light mr-3 position-relative" href="{{ url('/orders') }}" title="Orderan Masuk" style="display: inline-block; padding: 5px;">
+            <i class="bi bi-bag" style="font-size:1.4rem;"></i>
             @if($pendingOrders > 0)
-                <span class="badge badge-danger position-absolute" 
-                      style="top: -8px; right: -10px; border-radius: 50%; padding: 4px 6px; font-size: 0.7rem;">
+                <span class="position-absolute badge badge-danger rounded-circle d-flex justify-content-center align-items-center" 
+                      style="top: 0; right: 0; width: 18px; height: 18px; font-size: 0.7rem; border: 2px solid #1c1c1e; padding: 0;">
                     {{ $pendingOrders }}
                 </span>
             @endif
@@ -282,6 +335,9 @@
           integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
           crossorigin="anonymous"></script>
   <script src="https://cdn.datatables.net/2.3.4/js/dataTables.js"></script>
+  
+  <!-- Custom Smooth Scroll & Animations -->
+  <script src="{{ asset('js/smooth-scroll.js') }}"></script>
 
   <!-- Delete Confirmation Modal -->
   <div class="modal fade" id="deleteModal" tabindex="-1" role="dialog" aria-hidden="true">
