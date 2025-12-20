@@ -2,7 +2,7 @@
 <html lang="en">
 
 <head>
-    <title>iPhone Store - Premium</title>
+    <title>Apple Store - Premium</title>
     <!-- Required meta tags -->
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
@@ -32,13 +32,21 @@
 
         /* Hero Section */
         .hero {
-            padding: 80px 20px 40px;
+            padding: 100px 20px 40px;
             text-align: center;
             background: radial-gradient(circle at center, #2c2c2e 0%, #000000 70%);
+            min-height: 400px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            opacity: 0; /* Hidden initially for animation */
+            transform: translateY(20px);
+            animation: heroFadeIn 1s cubic-bezier(0.2, 0.8, 0.2, 1) forwards;
+            animation-delay: 0.2s;
         }
 
         .hero h1 {
-            font-size: 3.5rem;
+            font-size: 4rem;
             font-weight: 700;
             background: -webkit-linear-gradient(#fff, #888);
             -webkit-background-clip: text;
@@ -91,6 +99,8 @@
             display: flex;
             justify-content: space-between;
             align-items: center;
+            opacity: 0;
+            animation: fadeIn 1s ease forwards;
         }
         
         .btn-login {
@@ -110,6 +120,10 @@
         /* Product Grid */
         .product-section {
             padding: 60px 20px;
+            opacity: 0; /* Hidden initially */
+            transform: translateY(30px);
+            animation: gridFadeIn 1s cubic-bezier(0.2, 0.8, 0.2, 1) forwards;
+            animation-delay: 1.2s; /* Delayed to appear after hero */
         }
 
         .section-title {
@@ -118,28 +132,39 @@
             margin-bottom: 40px;
             text-align: center;
         }
+
+        /* Animations */
+        @keyframes fadeIn {
+            to { opacity: 1; }
+        }
+        @keyframes heroFadeIn {
+            to { opacity: 1; transform: translateY(0); }
+        }
+        @keyframes gridFadeIn {
+            to { opacity: 1; transform: translateY(0); }
+        }
     </style>
 </head>
 
 <body>
 
     <nav class="navbar-custom">
-        <a href="/" class="text-white font-weight-bold h5 mb-0"> iPhoneStore</a>
+        <a href="/" class="text-white font-weight-bold h5 mb-0"> Apple Store</a>
         <a href="{{ url('/login') }}" class="btn-login">Login</a>
     </nav>
 
     <div class="hero">
-        <h1>iPhone</h1>
-        <p>Lebih dari sekadar smartphone. Temukan iPhone impianmu hari ini.</p>
+        <h1>Apple Store</h1>
+        <p>Temukan perangkat Apple favoritmu. Mulai dari sini.</p>
         
         <div class="search-container">
             <i class="bi bi-search search-icon"></i>
-            <input type="text" id="search" class="form-control form-control-lg" placeholder="Cari iPhone, iPad, Mac...">
+            <input type="text" id="search" class="form-control form-control-lg" placeholder="Cari iPhone, Mac, iPad..." autocomplete="off">
         </div>
     </div>
 
     <div class="container product-section">
-        <h2 class="section-title">Terbaru.</h2>
+        <h2 class="section-title">Koleksi Terbaru.</h2>
         
         <div class="row" id="product-grid">
             @include('partials.product_list', ['products' => $products])
@@ -147,7 +172,7 @@
     </div>
 
     <footer class="text-center py-5 text-muted small">
-        &copy; {{ date('Y') }} iPhoneStore Inc. All rights reserved.
+        &copy; {{ date('Y') }} Apple Store Inc. All rights reserved.
     </footer>
 
     <!-- Scripts -->

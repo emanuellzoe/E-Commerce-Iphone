@@ -47,9 +47,9 @@
           @endif
         </td>
         <td class="text-right">
-          <a href="/users/delete/{{ $u->id }}" class="btn btn-outline-danger btn-sm rounded-circle p-2" title="Delete User" onclick="return confirm('Hapus user ini?')">
+          <button class="btn btn-outline-danger btn-sm rounded-circle p-2" title="Delete User" data-toggle="modal" data-target="#deleteModal" data-url="/users/delete/{{ $u->id }}">
               <i class="bi bi-trash"></i>
-          </a>
+          </button>
         </td>
       </tr>
       @endforeach

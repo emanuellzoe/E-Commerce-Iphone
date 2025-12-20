@@ -1,87 +1,121 @@
 <!doctype html>
 <html lang="en">
-  <head>
-    <title>Login - E-Commerce</title>
-    <!-- Required meta tags -->
+<head>
+    <title>Sign In - iPhoneStore</title>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-
-    <!-- Bootstrap CSS -->
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
     
     <style>
         body {
-            background: #121212;
-            color: #e6e6e6;
+            background: #000000;
+            color: #f5f5f7;
+            font-family: 'Inter', sans-serif;
             height: 100vh;
             display: flex;
             align-items: center;
             justify-content: center;
+            overflow: hidden;
         }
-        .card {
-            background-color: #1e1e1e;
-            border: 1px solid #333;
-            box-shadow: 0 4px 8px rgba(0,0,0,0.3);
+        
+        /* Ambient background glow */
+        body::before {
+            content: '';
+            position: absolute;
+            width: 800px;
+            height: 800px;
+            background: radial-gradient(circle, rgba(41, 151, 255, 0.15) 0%, rgba(0,0,0,0) 70%);
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            z-index: -1;
         }
-        .card-header {
-            background-color: #252525;
-            border-bottom: 1px solid #333;
-            color: #fff;
+
+        .login-card {
+            background: rgba(28, 28, 30, 0.6);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 24px;
+            padding: 40px;
+            width: 100%;
+            max-width: 400px;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.4);
+        }
+
+        .brand-logo {
+            font-size: 1.5rem;
+            font-weight: 600;
+            margin-bottom: 30px;
             text-align: center;
-            font-weight: bold;
+            color: #fff;
         }
+
         .form-control {
-            background-color: #2b2b2b;
-            border: 1px solid #444;
+            background: rgba(0, 0, 0, 0.3);
+            border: 1px solid #38383a;
             color: #fff;
+            border-radius: 12px;
+            padding: 12px 16px;
+            height: auto;
+            font-size: 1rem;
+            transition: 0.3s;
         }
+
         .form-control:focus {
-            background-color: #333;
-            border-color: #007bff;
+            background: rgba(0, 0, 0, 0.5);
+            border-color: #2997ff;
+            box-shadow: 0 0 0 2px rgba(41, 151, 255, 0.25);
             color: #fff;
-            box-shadow: none;
         }
-        .form-control::placeholder {
-            color: #888;
+
+        .btn-primary {
+            background: #2997ff;
+            border: none;
+            border-radius: 12px;
+            padding: 12px;
+            font-weight: 500;
+            font-size: 1rem;
+            width: 100%;
+            margin-top: 20px;
+            transition: 0.3s;
         }
+
+        .btn-primary:hover {
+            background: #0071e3;
+            transform: scale(1.02);
+        }
+        
+        .back-link {
+            text-align: center;
+            margin-top: 20px;
+            display: block;
+            color: #86868b;
+            font-size: 0.9rem;
+            text-decoration: none;
+        }
+        .back-link:hover { color: #fff; text-decoration: none; }
     </style>
-  </head>
-  <body>
-    <div class="container">
-        <div class="row justify-content-center">
-            <div class="col-md-4">
-                <div class="card">
-                    <div class="card-header">
-                        USER LOGIN
-                    </div>
-                    <div class="card-body">
-                        <form action="/ceklogin" method="post">
-                            @csrf
-                            <div class="form-group pt-3">
-                                <label for="email" class="text-white-50 small">Email Address</label>
-                                <input type="email" id="email" name="email" class="form-control" placeholder="Masukkan E-mail" required autofocus>
-                            </div>
-                            <div class="form-group pt-3">
-                                <label for="password" class="text-white-50 small">Password</label>
-                                <input type="password" id="password" name="password" class="form-control" placeholder="Masukkan Password" required>
-                            </div>
-                            <div class="form-group pt-4 mb-0">
-                                <button class="btn btn-primary btn-block font-weight-bold">Login</button>
-                            </div>
-                        </form>
-                    </div>
-                    <div class="card-footer bg-transparent border-secondary text-center">
-                        <a href="{{ url('/') }}" class="small text-muted">Back to Home</a>
-                    </div>
-                </div>
+</head>
+<body>
+
+    <div class="login-card">
+        <div class="brand-logo"> Apple Store</div>
+        
+        <form action="/ceklogin" method="post">
+            @csrf
+            <div class="form-group mb-3">
+                <input type="email" name="email" class="form-control" placeholder="Email" required autofocus>
             </div>
-        </div>
+            <div class="form-group mb-3">
+                <input type="password" name="password" class="form-control" placeholder="Password" required>
+            </div>
+            <button class="btn btn-primary">Sign In</button>
+        </form>
+
+        <a href="{{ url('/') }}" class="back-link">Kembali ke Beranda</a>
     </div>
-      
-    <!-- Optional JavaScript -->
-    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
-    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
-  </body>
+
+</body>
 </html>

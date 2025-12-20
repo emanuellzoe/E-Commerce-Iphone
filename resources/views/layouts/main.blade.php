@@ -190,16 +190,29 @@
 
   <!-- TOP BAR -->
   <div class="topbar">
-    <div class="container-fluid d-flex justify-content-between align-items-center">
-      <div>
-        <button id="sidebarToggle" class="btn btn-sm btn-outline-secondary d-md-none">
-          <i class="bi bi-list"></i>
-        </button>
-        <a class="navbar-brand text-light ml-2 d-none d-md-inline" href="{{ url('/') }}">iPhoneStore</a>
-      </div>
+          <div class="container-fluid d-flex justify-content-between align-items-center">
+          <div>
+            <button id="sidebarToggle" class="btn btn-sm btn-outline-secondary d-md-none">
+              <i class="bi bi-list"></i>
+            </button>
+            <a class="navbar-brand text-light ml-2 d-none d-md-inline" href="{{ url('/') }}">Apple Store</a>
+          </div>
+    
+          <div class="d-flex align-items-center">        <!-- Notifikasi Orderan -->
+        @php
+            $pendingOrders = \App\Order::where('status', 'pending')->count();
+        @endphp
+        
+        <a class="text-light mr-4 position-relative" href="{{ url('/orders') }}" title="Orderan Masuk">
+            <i class="bi bi-bag" style="font-size:1.25rem"></i>
+            @if($pendingOrders > 0)
+                <span class="badge badge-danger position-absolute" 
+                      style="top: -8px; right: -10px; border-radius: 50%; padding: 4px 6px; font-size: 0.7rem;">
+                    {{ $pendingOrders }}
+                </span>
+            @endif
+        </a>
 
-      <div class="d-flex align-items-center">
-        <a class="text-light mr-3" href="#"><i class="bi bi-cart3"></i> <span class="badge badge-light text-dark">0</span></a>
         <div class="dropdown">
           <a class="text-light dropdown-toggle" id="userMenu" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">
             <i class="bi bi-person-circle" style="font-size:1.25rem"></i>
@@ -270,9 +283,37 @@
           crossorigin="anonymous"></script>
   <script src="https://cdn.datatables.net/2.3.4/js/dataTables.js"></script>
 
+  <!-- Delete Confirmation Modal -->
+  <div class="modal fade" id="deleteModal" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+      <div class="modal-content" style="background: #1c1c1e; border: 1px solid #333; color: #fff; border-radius: 18px;">
+        <div class="modal-body text-center p-4">
+          <div class="mb-3">
+            <i class="bi bi-exclamation-circle text-danger" style="font-size: 3rem;"></i>
+          </div>
+          <h5 class="mb-2">Konfirmasi Hapus</h5>
+          <p class="text-muted mb-4">Apakah Anda yakin ingin menghapus data ini? Tindakan ini tidak dapat dibatalkan.</p>
+          <div class="d-flex justify-content-center gap-2">
+            <button type="button" class="btn btn-secondary rounded-pill px-4 mr-2" data-dismiss="modal">Batal</button>
+            <a href="#" id="confirmDeleteBtn" class="btn btn-danger rounded-pill px-4">Hapus</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
   <script>
+    // Handle Delete Modal
+    $('#deleteModal').on('show.bs.modal', function (event) {
+      var button = $(event.relatedTarget);
+      var url = button.data('url');
+      var modal = $(this);
+      modal.find('#confirmDeleteBtn').attr('href', url);
+    });
+
     // init datatable (aman jika #example tidak ada)
     try { new DataTable('#example'); } catch(e){}
+
 
     // toggle sidebar mobile
     document.getElementById('sidebarToggle')?.addEventListener('click', function () {

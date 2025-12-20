@@ -182,5 +182,27 @@
     <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+    
+    @if(session('alert'))
+    <script>
+        $(document).ready(function() {
+            $('#successModal').modal('show');
+        });
+    </script>
+    
+    <!-- Success Modal -->
+    <div class="modal fade" id="successModal" tabindex="-1" role="dialog">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content text-center p-4">
+                <div class="mb-3">
+                    <i class="bi bi-check-circle-fill text-success" style="font-size: 3rem;"></i>
+                </div>
+                <h4 class="mb-2">Berhasil!</h4>
+                <p class="text-muted">{{ session('alert') }}</p>
+                <button type="button" class="btn btn-primary rounded-pill px-4 mt-3" data-dismiss="modal">OK</button>
+            </div>
+        </div>
+    </div>
+    @endif
 </body>
 </html>

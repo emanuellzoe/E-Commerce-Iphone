@@ -39,7 +39,7 @@
         </thead>
         <tbody>
           @foreach ($products as $idx => $p)
-          <tr class="{{ $p->stock <= 5 ? 'table-danger' : '' }}" style="{{ $p->stock <= 5 ? 'background: rgba(220,53,69,0.1) !important;' : '' }}">
+          <tr style="background-color: #2c2c2e !important; border-bottom: 4px solid #000;">
             <td class="text-center text-muted">{{ $idx + 1 }}</td>
             <td>
               @if ($p->image)
@@ -51,20 +51,22 @@
               @endif
             </td>
             <td>
-                <div class="font-weight-bold text-white">{{ $p->product_name }}</div>
-                <div class="text-muted small text-truncate" style="max-width: 200px;">{{ $p->description }}</div>
+                <div class="font-weight-bold" style="color: #e4e4e4;">{{ $p->product_name }}</div>
+                <div class="small text-muted text-truncate" style="max-width: 200px;">{{ $p->description }}</div>
             </td>
-            <td>Rp {{ number_format($p->price, 0, ',', '.') }}</td>
+            <td style="color: #e4e4e4;">Rp {{ number_format($p->price, 0, ',', '.') }}</td>
             <td>
                 @if($p->stock <= 5)
                     <span class="badge badge-danger">Sisa {{ $p->stock }}</span>
                 @else
-                    <span class="text-muted">{{ $p->stock }}</span>
+                    <span class="text-muted font-weight-bold">{{ $p->stock }}</span>
                 @endif
             </td>
             <td class="text-right">
-              <a href="/product/edit/{{ $p->id }}" class="btn btn-outline-light btn-sm rounded-circle p-2" title="Edit"> <i class="bi bi-pencil"></i></a>
-              <a href="/product/delete/{{ $p->id }}" class="btn btn-outline-danger btn-sm rounded-circle p-2" title="Delete" onclick="return confirm('Hapus produk ini?')"> <i class="bi bi-trash"></i></a>
+              <a href="/product/edit/{{ $p->id }}" class="btn btn-secondary btn-sm rounded-circle p-2" title="Edit" style="background: #3a3a3c; border:none;"> <i class="bi bi-pencil"></i></a>
+              <button class="btn btn-danger btn-sm rounded-circle p-2" title="Delete" data-toggle="modal" data-target="#deleteModal" data-url="/product/delete/{{ $p->id }}">
+                  <i class="bi bi-trash"></i>
+              </button>
             </td>
           </tr>
           @endforeach
