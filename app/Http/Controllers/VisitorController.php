@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Ecommerce;
+use App\Order;
 
 use Illuminate\Http\Request;
 
@@ -37,5 +38,25 @@ class VisitorController extends Controller
             ->get();
 
         return view('partials.product_list', ['products' => $products])->render();
+    }
+
+    public function productDetail($id)
+    {
+        $product = Ecommerce::findOrFail($id);
+        return view('product_detail', ['product' => $product]);
+    }
+
+    public function orderSave(Request $request)
+    {
+        $request->validate([
+            'product_id' => 'required|exists:ecommerce,id',
+            'customer_name' => 'required|string|max:255',
+            'customer_address' => 'required|string',
+            'delivery_option' => 'required|in:delivery,pickup',
+        ]);
+
+        Order::create($request->all());
+
+        return back()->with('alert', 'Pesanan berhasil dibuat! Terima kasih.');
     }
 }

@@ -7,6 +7,7 @@ use Illuminate\Support\Facades\Storage;
 use Illuminate\Http\Request;
 use App\User;
 use App\Ecommerce; // pastikan model ini sudah ada di folder App
+use App\Order;
 use Illuminate\Support\Facades\Auth;
 
 class PageController extends Controller
@@ -15,6 +16,12 @@ class PageController extends Controller
     public function home()
     {
         return view('home', ['key' => 'home']);
+    }
+
+    public function orders()
+    {
+        $orders = Order::with('product')->orderBy('created_at', 'desc')->get();
+        return view('orders', ['key' => 'orders', 'orders' => $orders]);
     }
 
     // Halaman daftar produk

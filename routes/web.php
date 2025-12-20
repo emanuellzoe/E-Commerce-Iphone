@@ -25,6 +25,7 @@ Route::group(['middleware' => 'auth'], function () {
     Route::get('/users/addform', 'PageController@userAddForm');
     Route::post('/users/save', 'PageController@userSave');
     Route::get('/users/delete/{id}', 'PageController@usersDeleteForm');
+    Route::get('/orders', 'PageController@orders');
     Route::get('/login', 'AuthController@login');
     Route::get('/logout', 'AuthController@logout');
 });
@@ -36,6 +37,8 @@ Route::group(['middleware' => 'guest'], function () {
     Route::get('/', 'VisitorController@search');
     Route::get('actsearch', 'VisitorController@actsearch');
     Route::get('search/live', 'VisitorController@liveSearch')->name('search.live');
+    Route::get('/product/detail/{id}', 'VisitorController@productDetail');
+    Route::post('/order/save', 'VisitorController@orderSave');
 });
 
 Route::get('/setting', 'PageController@setting');
