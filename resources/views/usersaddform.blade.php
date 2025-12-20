@@ -25,13 +25,10 @@
       <small class="text-muted">Kosongkan jika tidak ingin menambahkan foto.</small>
     </div>
 
-    <!-- jika butuh password saat tambah user, aktifkan blok ini -->
-    <!--
     <div class="form-group">
       <label for="password">Password</label>
       <input type="password" name="password" id="password" class="form-control" required>
     </div>
-    -->
 
     <button type="submit" class="btn btn-primary mt-3">Simpan</button>
   </form>

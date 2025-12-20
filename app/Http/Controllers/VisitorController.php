@@ -10,7 +10,8 @@ class VisitorController extends Controller
 {
     public function search()
     {
-        return view('search');
+        $products = Ecommerce::orderBy('id', 'desc')->get();
+        return view('search', ['products' => $products]);
     }
 
     public function actsearch(Request $request)
@@ -22,5 +23,19 @@ class VisitorController extends Controller
 
 
         return view('/actsearch', ['search' => $apple]);
+    }
+
+    public function liveSearch(Request $request)
+    {
+        $search = $request->input('search');
+        
+        $products = Ecommerce::query()
+            ->when($search, function ($query) use ($search) {
+                return $query->where('product_name', 'LIKE', '%' . $search . '%');
+            })
+            ->orderBy('id', 'desc')
+            ->get();
+
+        return view('partials.product_list', ['products' => $products])->render();
     }
 }

@@ -5,6 +5,8 @@
 @section('content')
 <div class="container-fluid">
   <h3 class="mb-4 text-light">Daftar Produk iPhone</h3>
+  <a href="/product/addform" class="btn btn-primary mb-3"><i class="bi bi-plus-square"></i> Tambah Produk</a>
+
   <!-- pop up -->
   @if (session('alert'))
     <div class="alert alert-warning alert-dismissible fade show" role="alert">
@@ -13,8 +15,13 @@
             <span aria-hidden="true">&times;</span>
         </button>
     </div>
-    @endif
+  @endif
 
+  <div class="alert alert-dark border-secondary mb-3" role="alert">
+      <small class="text-white-50">
+          <i class="bi bi-info-circle-fill text-info"></i> Baris berwarna <span class="badge badge-danger">merah</span> menandakan stok produk menipis (kurang dari 5).
+      </small>
+  </div>
 
   <table id="example" class="table table-dark table-striped table-hover w-100">
     <thead>
@@ -30,12 +37,18 @@
     </thead>
     <tbody>
       @foreach ($products as $idx => $p)
-      <tr>
+      <tr class="{{ $p->stock <= 5 ? 'table-danger text-dark' : '' }}">
         <td>{{ $idx + 1 }}</td>
-        <td>{{ $p->product_name }}</td>
+        <td class="font-weight-bold">{{ $p->product_name }}</td>
         <td>{{ $p->description }}</td>
         <td>Rp {{ number_format($p->price, 0, ',', '.') }}</td>
-        <td>{{ $p->stock }}</td>
+        <td>
+            @if($p->stock <= 5)
+                <span class="badge badge-danger p-2">Sisa {{ $p->stock }}!</span>
+            @else
+                {{ $p->stock }}
+            @endif
+        </td>
         <td>
           @if ($p->image)
             <img src="{{ asset('storage/products/' . $p->image) }}"
