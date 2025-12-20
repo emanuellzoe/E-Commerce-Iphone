@@ -192,6 +192,28 @@
       color: #fff;
     }
 
+    /* --- Custom File Input Styling --- */
+    input[type="file"] {
+      padding: 10px;
+      height: auto; /* Allow height to adjust */
+      background-color: #2c2c2e;
+      color: #86868b;
+    }
+    input[type="file"]::-webkit-file-upload-button {
+      background-color: #3a3a3c;
+      color: #fff;
+      border: 1px solid #444;
+      border-radius: 8px;
+      padding: 6px 12px;
+      margin-right: 15px;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+    input[type="file"]::-webkit-file-upload-button:hover {
+      background-color: var(--accent-blue);
+      border-color: var(--accent-blue);
+    }
+
     /* --- Dropdown Menu (Glass Effect) --- */
     .dropdown-menu {
       background: rgba(28, 28, 30, 0.95);

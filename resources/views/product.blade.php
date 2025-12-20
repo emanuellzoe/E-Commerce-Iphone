@@ -63,8 +63,8 @@
                 @endif
             </td>
             <td class="text-right">
-              <a href="/product/edit/{{ $p->id }}" class="btn btn-outline-secondary btn-sm rounded-circle d-inline-flex align-items-center justify-content-center" title="Edit" style="width: 32px; height: 32px; padding: 0;"> <i class="bi bi-pencil"></i></a>
-              <button class="btn btn-outline-danger btn-sm rounded-circle d-inline-flex align-items-center justify-content-center" title="Delete" data-toggle="modal" data-target="#deleteModal" data-url="/product/delete/{{ $p->id }}" style="width: 32px; height: 32px; padding: 0;">
+              <a href="/product/edit/{{ $p->id }}" class="btn btn-outline-secondary btn-sm rounded-circle d-inline-flex align-items-center justify-content-center" title="Edit" style="width: 40px; height: 40px; padding: 0;"> <i class="bi bi-pencil"></i></a>
+              <button class="btn btn-outline-danger btn-sm rounded-circle d-inline-flex align-items-center justify-content-center" title="Delete" data-toggle="modal" data-target="#deleteModal" data-url="/product/delete/{{ $p->id }}" style="width: 40px; height: 40px; padding: 0;">
                   <i class="bi bi-trash"></i>
               </button>
             </td>
